@@ -1,1 +1,40 @@
 <!-- El index es el login, si el usuario no está logueado lo redirige al sign up -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>TribeLink</title>
+    <link rel="stylesheet" href="./login.css">
+    <link rel="shortcut icon" href="./assets/src/icons/TribeLink.png" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+</head>
+
+<body class="body has-background-black-ter">
+    <div class="box has-background-grey-darker" data-theme="dark">
+        <h1 class="title is-4 has-text-white-bis">Welcome again to <strong>TribeLink</strong></h1>
+
+        <form id="loginForm">
+            <div class="field">
+                <label class="label has-text-white-bis">Email</label>
+                <div class="control">
+                    <input class="input is-link" type="email" placeholder="raul@example.com" />
+                </div>
+            </div>
+            <div class="field">
+                <label class="label has-text-white-bis">Password</label>
+                <div class="control">
+                    <input class="input" type="password" placeholder="********">
+                </div>
+            </div>
+            <button type="submit" class="button has-background-link has-text-white-bis is-fullwidth">Log In</button>
+            <p id="loginError" class="has-text-danger has-text-centered mt-3"></p>
+
+            <p class="has-text-centered mt-4 has-text-grey-light">
+                Don’t have an account? <a href="./pages/signUp/sign_up.html"><strong>Sign Up</strong></a>
+            </p>
+        </form>
+    </div>
+</body>
+
+</html>

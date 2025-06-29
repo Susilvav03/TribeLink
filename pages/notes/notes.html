@@ -1,1 +1,29 @@
 <!-- Esta página muestra las notas subidas por todos y el usuario solo puede eliminar, editar o crear las notas propias -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Notas - Crudzocial</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+</head>
+
+<body>
+    <section class="section">
+        <div class="container">
+            <h1 class="title">Tus Notas</h1>
+            <div class="field">
+                <textarea class="textarea" id="noteText" placeholder="Escribe una nueva nota..."></textarea>
+            </div>
+            <div class="control">
+                <button class="button is-primary" id="saveNoteBtn">Guardar Nota</button>
+            </div>
+
+            <div id="notesContainer" class="mt-5">
+                <!-- Aquí se renderizan notas con innerHTML -->
+            </div>
+        </div>
+    </section>
+</body>
+
+</html>

@@ -1,0 +1,48 @@
+    body {
+        background-color: #121212;
+        color: #ffffff;
+    }
+
+    .box {
+        background-color: #1f1f1f;
+        border-radius: 12px;
+    }
+
+    .input,
+    .textarea {
+        background-color: #2a2a2a;
+        color: #ffffff;
+        border: none;
+    }
+
+    .input::placeholder {
+        color: #aaa;
+    }
+
+    .button.is-info {
+        background-color: #00d1b2;
+        border: none;
+    }
+
+    .button.is-info:hover {
+        background-color: #00b89c;
+    }
+
+    .image-card {
+        background-color: #1e1e1e;
+        border-radius: 10px;
+        padding: 10px;
+        margin-bottom: 20px;
+        box-shadow: 0 0 10px rgba(0, 255, 255, 0.05);
+    }
+
+    .image-card img {
+        border-radius: 8px;
+        max-height: 200px;
+        object-fit: cover;
+        width: 100%;
+    }
+
+    .delete-btn {
+        margin-top: 10px;
+    }

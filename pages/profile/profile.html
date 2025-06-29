@@ -3,3 +3,63 @@ código postal. Tiene opción de Actualizar información y un botón para cerrar
 se puede llamar historial, logs o actividad, mostrando acciones importantes (Inicios de seción, crear, editar, eliminar imágenes o notas, etc).
 
 El log debe incluir Usuario, acción, fecha y hora. -->
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Perfil - Crudzocial</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+</head>
+
+<body>
+    <section class="section">
+        <div class="container">
+            <h1 class="title">Perfil de Usuario</h1>
+            <form id="profileForm">
+                <!-- Campos de perfil -->
+                <div class="columns">
+                    <div class="column">
+                        <label class="label">Nombre</label>
+                        <input class="input" type="text" id="name">
+                    </div>
+                    <div class="column">
+                        <label class="label">Apellido</label>
+                        <input class="input" type="text" id="lastname">
+                    </div>
+                </div>
+                <label class="label">Correo</label>
+                <input class="input" type="email" id="profileEmail">
+
+                <label class="label mt-4">Teléfono</label>
+                <input class="input" type="tel" id="phone">
+
+                <label class="label mt-4">Dirección</label>
+                <input class="input" type="text" id="address">
+
+                <label class="label mt-4">Ciudad</label>
+                <input class="input" type="text" id="city">
+
+                <label class="label mt-4">País</label>
+                <input class="input" type="text" id="country">
+
+                <label class="label mt-4">Código Postal</label>
+                <input class="input" type="text" id="zip">
+
+                <div class="control mt-5">
+                    <button class="button is-success">Actualizar</button>
+                </div>
+            </form>
+
+            <hr class="my-5">
+            <h2 class="subtitle">Resumen de Actividad</h2>
+            <div id="logsContainer">
+                <!-- Mostrar logs con innerHTML -->
+            </div>
+            <button class="button is-danger mt-4" id="logoutBtn">Cerrar Sesión</button>
+        </div>
+    </section>
+</body>
+
+</html>

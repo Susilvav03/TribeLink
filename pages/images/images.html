@@ -1,1 +1,46 @@
 <!-- // Esta página muestra las imágenes subidas por todos y el usuario solo puede eliminar las suyas -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Imágenes - Crudzocial</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+</head>
+
+<body>
+    <section class="section">
+        <div class="container">
+            <h1 class="title has-text-white has-text-centered">Your Images</h1>
+
+            <!-- Add image form -->
+            <div class="box mt-5">
+                <div class="field has-addons">
+                    <div class="control is-expanded">
+                        <input class="input" type="url" id="imageUrl" placeholder="Paste image URL here">
+                    </div>
+                    <div class="control">
+                        <button class="button is-info" id="addImageBtn">Add Image</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Image Gallery -->
+            <div id="imageGallery" class="columns is-multiline">
+                <!-- Cards will be inserted here dynamically -->
+                <!-- Example:
+        <div class="column is-one-third">
+          <div class="image-card">
+            <figure class="image">
+              <img src="https://example.com/image.jpg" alt="User image">
+            </figure>
+            <button class="button is-danger is-small is-fullwidth delete-btn">Delete</button>
+          </div>
+        </div>
+        -->
+            </div>
+        </div>
+    </section>
+</body>
+
+</html>

@@ -1,1 +1,87 @@
 <!-- // Registro cuando no tienen usuario o el usuario es invalido -->
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Registrarse - Crudzocial</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+</head>
+
+<body>
+    <div class="box">
+        <h1 class="title is-3 has-text-centered">Create an Account</h1>
+        <form id="signupForm">
+            <div class="field">
+                <label class="label">First Name</label>
+                <div class="control">
+                    <input class="input" type="text" id="firstName" placeholder="Your first name" required>
+                </div>
+            </div>
+
+            <div class="field">
+                <label class="label">Last Name</label>
+                <div class="control">
+                    <input class="input" type="text" id="lastName" placeholder="Your last name" required>
+                </div>
+            </div>
+
+            <div class="field">
+                <label class="label">Email</label>
+                <div class="control">
+                    <input class="input" type="email" id="signupEmail" placeholder="you@example.com" required>
+                </div>
+            </div>
+
+            <div class="field">
+                <label class="label">Phone</label>
+                <div class="control">
+                    <input class="input" type="tel" id="phone" placeholder="Optional phone number">
+                </div>
+            </div>
+
+            <div class="field">
+                <label class="label">Country</label>
+                <div class="control">
+                    <input class="input" type="text" id="country" placeholder="Your country">
+                </div>
+            </div>
+
+            <div class="field">
+                <label class="label">City</label>
+                <div class="control">
+                    <input class="input" type="text" id="city" placeholder="Your city">
+                </div>
+            </div>
+
+            <div class="field">
+                <label class="label">Address</label>
+                <div class="control">
+                    <input class="input" type="text" id="address" placeholder="Street and number">
+                </div>
+            </div>
+
+            <div class="field">
+                <label class="label">ZIP Code</label>
+                <div class="control">
+                    <input class="input" type="text" id="zip" placeholder="Postal code">
+                </div>
+            </div>
+
+            <div class="field mt-5">
+                <div class="control">
+                    <button type="submit" class="button is-primary is-fullwidth">Sign Up</button>
+                </div>
+            </div>
+
+            <p id="signupMessage" class="has-text-danger has-text-centered mt-3"></p>
+
+            <p class="has-text-centered mt-4">
+                Already have an account? <a href="login.html">Log In</a>
+            </p>
+        </form>
+    </div>
+</body>
+
+</html>

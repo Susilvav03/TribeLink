@@ -1,0 +1,50 @@
+    body {
+        background-color: #121212;
+        color: #ffffff;
+        min-height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-family: 'Segoe UI', sans-serif;
+    }
+
+    .box {
+        background-color: #1e1e1e;
+        padding: 2rem;
+        border-radius: 12px;
+        width: 100%;
+        max-width: 450px;
+        box-shadow: 0 0 20px rgba(0, 255, 255, 0.1);
+    }
+
+    .input,
+    .textarea {
+        background-color: #2a2a2a;
+        color: #ffffff;
+        border: none;
+    }
+
+    .input::placeholder {
+        color: #aaa;
+    }
+
+    .label {
+        color: #f0f0f0;
+    }
+
+    .title {
+        color: #ffffff;
+    }
+
+    .button.is-primary {
+        background-color: #00d1b2;
+        border: none;
+    }
+
+    .button.is-primary:hover {
+        background-color: #00b89c;
+    }
+
+    a {
+        color: #00d1b2;
+    }
