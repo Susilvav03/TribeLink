@@ -10,7 +10,7 @@ document.getElementById("loginForm").addEventListener("submit", (e) => {
     if (usuarioEncontrado)  {
         message.textContent = "Iniciando sesion...";
         setTimeout(() => {
-        window.location.href = "./pages/notes/notes.html";
+        window.location.href = "../profile/profile.html";
     }, 3000);
     } else {
         message.textContent = "Usuario no registrado";
