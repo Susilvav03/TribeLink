@@ -18,7 +18,7 @@
             <div class="field">
                 <label class="label has-text-white-bis">Email</label>
                 <div class="control">
-                    <input class="input is-link" type="email" placeholder="raul@example.com" required />
+                    <input id="loginEmail" class="input is-link" type="email" placeholder="raul@example.com" required />
                 </div>
             </div>
             <div class="field">
@@ -27,7 +27,7 @@
                     <input class="input" type="password" placeholder="********" required>
                 </div>
             </div>
-            <button type="submit" class="button has-background-link has-text-white-bis is-fullwidth">Log In</button>
+            <button id="submit" type="submit" class="button has-background-link has-text-white-bis is-fullwidth">Log In</button>
             <p id="loginError" class="has-text-danger has-text-centered mt-3"></p>
 
             <p class="has-text-centered mt-4 has-text-grey-light">
@@ -35,6 +35,7 @@
             </p>
         </form>
     </div>
+    <script src="./login.js"> </script>
 </body>
 
 </html>

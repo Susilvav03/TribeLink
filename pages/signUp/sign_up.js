@@ -14,11 +14,17 @@ document.getElementById("signupForm").addEventListener("submit", (e) => {
     
     let users = JSON.parse(localStorage.getItem("users")) || [];
 
+    
+    const userExist = users.some(u => u.email === newUser.email);
+    
+    if (userExist) {
+        alert("Este correo ya esta registrado.")
+        return
+    }    
+    
     users.push(newUser);
     localStorage.setItem("users", JSON.stringify(users));
-
     
-
     alert("Usuario registrado correctamente.");
     window.location.href = "../../login.html";
 });
