@@ -1,46 +1,58 @@
 <!-- // Esta página muestra las imágenes subidas por todos y el usuario solo puede eliminar las suyas -->
+<!-- pages/images/images.html -->
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="UTF-8">
-    <title>Imágenes - Crudzocial</title>
+    <title>Gallery - TribeLink</title>
+    <link rel="stylesheet" href="./images.css">
+    <link rel="shortcut icon" href="../../assets/src/icons/page_icon.png" type="image/x-icon">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
 </head>
 
 <body>
-    <section class="section">
-        <div class="container">
-            <h1 class="title has-text-white has-text-centered">Your Images</h1>
 
-            <!-- Add image form -->
-            <div class="box mt-5">
-                <div class="field has-addons">
-                    <div class="control is-expanded">
-                        <input class="input" type="url" id="imageUrl" placeholder="Paste image URL here">
-                    </div>
-                    <div class="control">
-                        <button class="button is-info" id="addImageBtn">Add Image</button>
-                    </div>
+    <!-- Top bar -->
+    <div class="topbar">
+        <div>
+            <strong>Riwi</strong>
+            <a href="./images.html"><span class="ml-4">Images</span></a>
+            <a href="../notes/notes.html"><span class="ml-4">Notes</span></a>
+            <a href="#"><span class="ml-4">Logs</span></a>
+        </div>
+        <div class="user">
+            <strong> TribeLink </strong>
+        </div>
+    </div>
+
+    <!-- Main layout -->
+    <div class="columns m-0" style="min-height: 100vh;">
+        <!-- Sidebar -->
+        <aside class="column is-2 sidebar p-4 has-background-grey-darker">
+            <p class="menu-label has-text-centered has-text-white is-size-5 mb-3">Menu</p>
+            <ul class="menu-list">
+                <li><a href="./images.html">Images</a></li>
+                <li><a href="../notes/notes.html">Notes</a></li>
+                <li><a href="#">Logs</a></li>
+            </ul>
+        </aside>
+
+        <!-- Content -->
+        <div class="column is-10">
+            <div class="card-container">
+                <!-- Upload icon -->
+                <div class="has-text-centered">
+                    <div class="image-upload" id="uploadTrigger">📤</div>
                 </div>
-            </div>
 
-            <!-- Image Gallery -->
-            <div id="imageGallery" class="columns is-multiline">
-                <!-- Cards will be inserted here dynamically -->
-                <!-- Example:
-        <div class="column is-one-third">
-          <div class="image-card">
-            <figure class="image">
-              <img src="https://example.com/image.jpg" alt="User image">
-            </figure>
-            <button class="button is-danger is-small is-fullwidth delete-btn">Delete</button>
-          </div>
-        </div>
-        -->
+                <!-- Image grid -->
+                <div id="imageGrid" class="columns is-multiline is-mobile is-centered"></div>
             </div>
         </div>
-    </section>
+    </div>
+
+    <script src="images.js"></script>
 </body>
 
 </html>
