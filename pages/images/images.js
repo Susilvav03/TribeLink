@@ -91,7 +91,7 @@ document.addEventListener('DOMContentLoaded', () => {
     } else {
         console.error('El elemento #uploadTrigger no fue encontrado.');
     }
-
+            // sadalsjksdhasldhasdsljkdha
     // Cargar las imágenes al iniciar la página
     loadImages();
 });
