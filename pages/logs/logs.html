@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Gallery - TribeLink</title>
+    <title>Logs - TribeLink</title>
     <link rel="stylesheet" href="../../pages/images/images.css">
     <link rel="shortcut icon" href="../../assets/src/icons/page_icon.png" type="image/x-icon">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
@@ -14,9 +14,9 @@
     <div class="topbar">
         <div>
             <strong>Riwi</strong>
-            <a href="./images.html"><span class="ml-4">Images</span></a>
+            <a href="../images/images.html"><span class="ml-4">Images</span></a>
             <a href="../notes/notes.html"><span class="ml-4">Notes</span></a>
-            <a href="../logs/logs.html"><span class="ml-4">Logs</span></a>
+            <a href="./logs.html"><span class="ml-4">Logs</span></a>
         </div>
         <div class="dropdown is-right is-hoverable" id="user-dropdown">
             <div class="dropdown-trigger">
@@ -40,27 +40,32 @@
         <aside class="column is-2 sidebar p-4">
             <p class="menu-label has-text-centered has-text-white is-size-5 mb-3">Menu</p>
             <ul class="menu-list">
-                <li><a href="./images.html" class="is-active">Images</a></li>
+                <li><a href="./images.html">Images</a></li>
                 <li><a href="../notes/notes.html">Notes</a></li>
-                <li><a href="../logs/logs.html">Logs</a></li>
+                <li><a href="../logs/logs.html" class="is-active">Logs</a></li>
             </ul>
         </aside>
 
-        <div class="column is-10">
-            <div class="card-container">
-                <div class="has-text-centered">
-                    <div class="image-upload" id="uploadTrigger">📤</div>
+        <div class="column is-10 p-4">
+            <div class="logs-container">
+                <h1 class="title is-4 has-text-black">Activity Logs</h1>
+                <div id="logsContainer" class="content">
+                    <p>Recent activity logs will appear here. (e.g., Login, Note Creation, Image Upload) [cite: 131, 134, 135]</p>
+                    <p>
+                        * Log 1: Login - 2025-06-26 16:32 [cite: 134, 139]
+                    </p>
+                    <p>
+                        * Log 2: Created Note "Meeting Agenda" - 2025-06-27 10:00 [cite: 135, 139]
+                    </p>
+                    <p>
+                        * Log 3: Uploaded Image "Vacation.jpg" - 2025-06-28 14:15 [cite: 135, 139]
+                    </p>
                 </div>
-
-                <div id="imageGrid" class="columns is-multiline is-mobile is-centered"></div>
             </div>
         </div>
-    </div>
 
-    <script src="./images.js"></script>
+    <script src="./logs.js"></script>
     <script src="../../assets/scripts/middleware.js"></script>
-
-    
 </body>
 
 

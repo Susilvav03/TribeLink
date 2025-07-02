@@ -3,7 +3,7 @@
     }
 
     .sidebar {
-        background-color: #14532d;
+        background-color: #011213;
         border-radius: 6px;
     }
 
@@ -24,7 +24,7 @@
     }
 
     .topbar {
-        background-color: #e4e4e4;
+        background-color: #e4e4e471;
         padding: 1rem;
         display: flex;
         justify-content: space-between;
@@ -43,4 +43,12 @@
         color: white;
         cursor: pointer;
         margin-bottom: 1rem;
+    }
+
+    .dropdown.is-hoverable .dropdown-menu {
+    display: none; 
+    }
+
+    .dropdown.is-hoverable:hover .dropdown-menu {
+    display: block; 
     }
