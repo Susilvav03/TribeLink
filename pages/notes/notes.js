@@ -1,42 +1,64 @@
-// Función para cargar y mostrar las notas
+//Esperar que cargue el DOM para no tener interrupciones correctamente
+document.addEventListener("DOMContentLoaded", () => {
 
-function loadNotes() {
-  const notesContainer = document.getElementById('notesContainer');
-  const notes = JSON.parse(localStorage.getItem('notes')) || [];
-  notesContainer.innerHTML = ''; // Limpiar notas actuales
-  notes.forEach((note, index) => {
-    const noteElement = document.createElement('div');
-    noteElement.className = 'box';
-    noteElement.innerHTML = `
-      <p>${note}</p>
-      <button class="button is-danger is-small" onclick="deleteNote(${index})">Eliminar</button>
+    // llamar los elementos de HTML por medio del ID
+    const inputNote = document.getElementById("newNote");
+    const buttonKeep = document.getElementById("buttonSave");
+    const containerNotes = document.getElementById("containerNotes");
+
+    let notes = JSON.parse(localStorage.getItem("notes")) || [];
+
+    notes.forEach((note, index) => {
+        createNote(note, index);
+    });
+
+    buttonKeep.addEventListener("click", () => {
+    let text = inputNote.value.trim();
+    if (text === "") return;
+
+    notes.push(text);
+    localStorage.setItem("notes", JSON.stringify(notes));
+    createNote(text, notes.length - 1);
+    inputNote.value = "";
+    });
+
+    function createNote(text, index) {
+    const col = document.createElement("div");
+    col.className = "col-md-4 mb-3";
+    col.setAttribute("data-index", index);
+
+    col.innerHTML = `
+    <div class="card note-card p-3">
+        <p>${text}</p>
+        <div class="note-actions">
+            <a href="#" class="text-danger btn-eliminar">Delete</a>
+            <a href="#" class="text-primary btn-editar">Edit</a>
+        </div>
+    </div>
     `;
-    notesContainer.appendChild(noteElement);
-  });
-}
 
-// Función para guardar una nota
-  
-document.getElementById('saveNoteBtn').addEventListener('click', 
-function () {
-  const noteText = document.getElementById('noteText').value.trim();
-  if (noteText) {
-    const notes = JSON.parse(localStorage.getItem('notes')) || [];
-    notes.push(noteText);
-    localStorage.setItem('notes', JSON.stringify(notes));
-    document.getElementById('noteText').value = '';
-    loadNotes();
-  }
+    containerNotes.appendChild(col);
+
+    col.querySelector(".btn-eliminar").addEventListener("click", (e) => {
+        e.preventDefault();
+        const i = parseInt(col.getAttribute("data-index"));
+        notes.splice(i, 1);
+        localStorage.setItem("notes", JSON.stringify(notes));
+        containerNotes.innerHTML = "";
+        notes.forEach((n, idx) => createNote(n, idx));
+    });
+
+    col.querySelector(".btn-editar").addEventListener("click", (e) => {
+        e.preventDefault();
+        const i = parseInt(col.getAttribute("data-index"));
+        const newText = prompt("Edit note:", notes[i]);
+        if (newText) {
+            notes[i] = newText;
+            localStorage.setItem("notes", JSON.stringify(notes));
+            containerNotes.innerHTML = "";
+            notes.forEach((n, idx) => createNote(n, idx));
+        }
+    });
+    }
 });
-
-// Función para eliminar una nota
-function deleteNote(index) {
-  const notes = JSON.parse(localStorage.getItem('notes')) || [];
-  notes.splice(index, 1);
-  localStorage.setItem('notes', JSON.stringify(notes));
-  loadNotes();
-}
-
-// Cargar notas al inicio
-window.addEventListener('DOMContentLoaded', loadNotes);
 
