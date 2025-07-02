@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Gallery - TribeLink</title>
+    <title>Logs - TribeLink</title>
     <link rel="stylesheet" href="../../pages/images/images.css">
     <link rel="shortcut icon" href="../../assets/src/icons/page_icon.png" type="image/x-icon">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
@@ -40,24 +40,45 @@
         <aside class="column is-2 sidebar p-4">
             <p class="menu-label has-text-centered has-text-white is-size-5 mb-3">Menu</p>
             <ul class="menu-list">
-                <li><a href="./images.html" class="is-active">Images</a></li>
+                <li><a href="./images.html">Images</a></li>
                 <li><a href="../notes/notes.html">Notes</a></li>
-                <li><a href="../logs/logs.html">Logs</a></li>
+                <li><a href="../logs/logs.html" class="is-active">Logs</a></li>
             </ul>
         </aside>
 
-        <div class="column is-10">
-            <div class="card-container">
-                <div class="has-text-centered">
-                    <div class="image-upload" id="uploadTrigger">📤</div>
-                </div>
-
-                <div id="imageGrid" class="columns is-multiline is-mobile is-centered"></div>
+        <div class="column is-10 p-4">
+            <div class="logs-container">
+                <h1 class="title is-4 has-text-black">Activity Logs</h1>
+                <table class="table is-striped is-fullwidth">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>ACTION</th>
+                            <th>DATE/HOUR</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>1</td>
+                            <td>Log in</td>
+                            <td>26/June/-2025 16:32</td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td>Upload new note</td>
+                            <td>26/june/2025 16:32</td>
+                        </tr>
+                        <tr>
+                            <td>3</td>
+                            <td>Upload new image</td>
+                            <td>26/june/2025 4:32 PM</td>
+                        </tr>
+                        </tbody>
+                </table>
             </div>
         </div>
-    </div>
 
-    <script src="./images.js"></script>
+    <script src="./logs.js"></script>
     <script src="../../assets/scripts/middleware.js"></script>
 </body>
 
