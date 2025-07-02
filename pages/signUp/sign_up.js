@@ -9,7 +9,7 @@ document.getElementById("signupForm").addEventListener("submit", (e) => {
         country : document.getElementById("country").value,
         city : document.getElementById("city").value,
         address : document.getElementById("address").value,
-        zipCode : document.getElementById("zip").value,
+
     };
     
     let users = JSON.parse(localStorage.getItem("users")) || [];
@@ -25,5 +25,5 @@ document.getElementById("signupForm").addEventListener("submit", (e) => {
     localStorage.setItem("users", JSON.stringify(users));
     
     alert("Usuario registrado correctamente.");
-    window.location.href = "../../login.html";
+    window.location.href = "../login/login.html";
 });
