@@ -41,7 +41,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const logs = loadLogs();
         const now = new Date();
         const newLog = {
-            user: "Usuario Actual", // Podrías obtener el nombre de usuario de la sesión real
+            user: "", // Podrías obtener el nombre de usuario de la sesión real
             action: action,
             date: now.toLocaleDateString('es-ES'),
             time: now.toLocaleTimeString('es-ES')
@@ -70,7 +70,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const renderLogs = () => {
         const logs = loadLogs();
         if (logs.length === 0) {
-            logsContainer.innerHTML = '<p>No hay actividad registrada.</p>';
+            logsContainer.innerHTML = '<p>No activity recorded.</p>';
             return;
         }
 
@@ -78,10 +78,10 @@ document.addEventListener('DOMContentLoaded', () => {
             <table class="table is-striped is-fullwidth">
                 <thead>
                     <tr>
-                        <th>Usuario</th>
-                        <th>Acción</th>
-                        <th>Fecha</th>
-                        <th>Hora</th>
+                        <th>User</th>
+                        <th>Action</th>
+                        <th>Date</th>
+                        <th>Time</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -136,7 +136,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Valida que un campo no esté vacío (obligatorio)
     const validateRequired = (inputElement, fieldName) => {
         if (inputElement.value.trim() === '') {
-            showError(inputElement, `El ${fieldName} es obligatorio.`);
+            showError(inputElement, `The ${fieldName} is mandatory.`);
             return false;
         }
         hideError(inputElement);
@@ -148,7 +148,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // Expresión regular para un formato de email básico (no es 100% estricta pero cubre la mayoría)
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         if (inputElement.value.trim() !== '' && !emailRegex.test(inputElement.value.trim())) {
-            showError(inputElement, 'Introduce un correo electrónico válido (ej. usuario@dominio.com).');
+            showError(inputElement, 'Enter a valid email address (ej. usuario@dominio.com).');
             return false;
         }
         hideError(inputElement);
@@ -159,7 +159,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const validateNumbersOnly = (inputElement, fieldName) => {
         const numberRegex = /^\d+$/; // Expresión regular para uno o más dígitos
         if (inputElement.value.trim() !== '' && !numberRegex.test(inputElement.value.trim())) {
-            showError(inputElement, `El ${fieldName} debe contener solo números.`);
+            showError(inputElement, `The ${fieldName} must contain only numbers.`);
             return false;
         }
         hideError(inputElement);
@@ -170,11 +170,11 @@ document.addEventListener('DOMContentLoaded', () => {
     const validateLength = (inputElement, fieldName, minLength, maxLength) => {
         const value = inputElement.value.trim();
         if (value.length < minLength) {
-            showError(inputElement, `El ${fieldName} debe tener al menos ${minLength} caracteres.`);
+            showError(inputElement, `The ${fieldName} musht have at least ${minLength} characters.`);
             return false;
         }
         if (maxLength && value.length > maxLength) {
-            showError(inputElement, `El ${fieldName} no debe exceder los ${maxLength} caracteres.`);
+            showError(inputElement, `The ${fieldName} must not exceed ${maxLength} characters.`);
             return false;
         }
         hideError(inputElement);
@@ -244,7 +244,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Si alguna validación falló, se notifica al usuario y se detiene el proceso
         if (!isValid) {
-            alert('Por favor, corrige los errores resaltados en el formulario.');
+            alert('Please correct the errors highlighted in the form..');
             return;
         }
 
@@ -261,8 +261,8 @@ document.addEventListener('DOMContentLoaded', () => {
         };
 
         saveUserProfile(updatedProfile); // Guarda el perfil actualizado
-        addLog('Información de perfil actualizada'); // Registra la acción
-        alert('¡Perfil actualizado con éxito!'); // Notifica al usuario
+        addLog('Updated profile information'); // Registra la acción
+        alert('¡Successfully updated profile!'); // Notifica al usuario
     });
 
     // --- Validaciones en tiempo real (al perder el foco del campo) ---
@@ -316,10 +316,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Maneja el clic en el botón de cerrar sesión
     logoutBtn.addEventListener('click', () => {
-        addLog('Sesión cerrada'); // Registra la acción de cerrar sesión
+        addLog('Closed session'); // Registra la acción de cerrar sesión
         // En una aplicación real, aquí borrarías la sesión del usuario (e.g., tokens, cookies)
         // y lo redirigirías a la página de inicio de sesión.
-        alert('Has cerrado sesión.');
+        alert('You have logged out.');
         // Opcional: Redirigir al usuario (ejemplo: window.location.href = '/login.html';)
         // Para limpiar localStorage al cerrar sesión (opcional, dependiendo de tu lógica):
         // localStorage.removeItem('userProfile');
@@ -330,5 +330,5 @@ document.addEventListener('DOMContentLoaded', () => {
     // Carga y muestra los datos del perfil y los logs al cargar la página
     renderUserProfile();
     renderLogs();
-    addLog('Inicio de sesión'); // Registra que el usuario ha "iniciado sesión" al cargar la página
+    addLog('Login'); // Registra que el usuario ha "iniciado sesión" al cargar la página
 });
