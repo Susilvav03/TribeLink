@@ -16,13 +16,13 @@ document.getElementById("signupForm").addEventListener("submit", (e) => {
     const userExist = users.some(u => u.email === newUser.email);
     
     if (userExist) {
-        alert("Este correo ya esta registrado.")
+        alert("This email is already registered.")
         return
     }    
     
     users.push(newUser);
     localStorage.setItem("users", JSON.stringify(users));
     
-    alert("Usuario registrado correctamente.");
+    alert("User successfully registered.");
     window.location.href = "../login/login.html";
 });
