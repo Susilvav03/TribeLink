@@ -10,7 +10,7 @@ document.getElementById("loginForm").addEventListener("submit", (e) => {
 
     if (userFound)  {
         sessionStorage.setItem("userActive", JSON.stringify(userFound))
-        message.textContent = "Logining in...";
+        message.textContent = "Logging in...";
         setTimeout(() => {
         window.location.href = "../profile/profile.html";
     }, 3000);
