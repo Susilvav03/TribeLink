@@ -13,7 +13,6 @@ document.getElementById("signupForm").addEventListener("submit", (e) => {
     };
     
     let users = JSON.parse(localStorage.getItem("users")) || [];
-
     
     const userExist = users.some(u => u.email === newUser.email);
     
