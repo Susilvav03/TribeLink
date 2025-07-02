@@ -1,3 +1,151 @@
-body {
+/* Importing a Google Font for a professional look */
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap');
+
+/* General Body Styles */
+html, body {
+    height: 100%; /* Ensure html and body take full height */
+    margin: 0;
+    padding: 0;
+    background-color: #121212; /* Deep dark background */
+    color: #E0E0E0; /* Light grey for general text */
+    font-family: 'Roboto', sans-serif; /* Using Roboto for a clean, modern look */
+    line-height: 1.6;
+    scroll-behavior: smooth; /* Smooth scrolling for anchor links */
     height: 100vh;
+}
+
+/* Link Styles */
+a {
+    color: #42A5F5; /* A vibrant blue for links */
+    text-decoration: none; /* No underline by default */
+    transition: color 0.3s ease, background-color 0.3s ease; /* Smooth transitions */
+}
+
+a:hover {
+    color: #90CAF9; /* Lighter blue on hover */
+    text-decoration: none;
+}
+
+/* Hero Section Customization */
+.hero.is-dark {
+    background-color: #1A202C; /* Darker blue-grey for the hero section */
+    /* You could also use a subtle gradient for more depth */
+    background: linear-gradient(135deg, #1A202C 0%, #10141C 100%);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4); /* More prominent shadow for the hero */
+}
+
+.hero-head .navbar {
+    background-color: rgba(26, 32, 44, 0.8); /* Slightly transparent dark background for fixed navbar */
+    padding: 1rem 0;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3); /* Shadow for the navbar */
+}
+
+.hero-body {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.hero-body .title {
+    color: #E0E0E0; /* Light grey for the main title */
+    font-size: 4.5rem; /* Larger font size for impact */
+    font-weight: 700;
+    letter-spacing: 2px; /* Slightly increased letter spacing */
+    text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.5); /* Stronger text shadow for depth */
+}
+
+.hero-body .subtitle {
+    color: #B0BEC5; /* Muted light grey for the subtitle */
+    font-weight: 300;
+    font-size: 1.8rem;
+    margin-top: 1rem;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.4);
+}
+
+/* Navbar Adjustments */
+.navbar-item {
+    color: #CFD8DC !important; /* Lighter grey for navbar items */
+    font-weight: 500;
+    padding: 0.75rem 1.25rem; /* More padding for better clickability */
+    border-radius: 4px; /* Slightly rounded corners */
+}
+
+.navbar-item:hover,
+.navbar-item.is-active {
+    color: #BBDEFB !important; /* Lighter blue on hover and active */
+    background-color: rgba(66, 165, 245, 0.15) !important; /* Subtle blue background on hover/active */
+}
+
+.navbar-brand .navbar-item strong {
+    color: #FFFFFF; /* White for the brand name */
+    font-size: 2.5rem !important; /* Prominent brand name */
+    letter-spacing: 1px;
+}
+
+.navbar-burger {
+    color: #CFD8DC !important; /* Lighter grey for the burger icon */
+    background-color: transparent !important;
+}
+
+.navbar-burger span {
+    background-color: #CFD8DC !important; /* Color for the burger lines */
+}
+
+.navbar-burger:hover {
+    background-color: rgba(207, 216, 220, 0.1) !important; /* Subtle background on burger hover */
+}
+
+/* Navbar menu when active on mobile */
+.navbar-menu {
+    background-color: #1A202C; /* Dark blue-grey background for mobile menu */
+    padding: 1rem 0;
+    border-top: 1px solid rgba(255, 255, 255, 0.1); /* Subtle separator */
+    border-radius: 50px;
+     box-shadow: 0 8px 16px rgba(255, 255, 255, 0.05), /* Lighter, subtle white shadow */
+                0 0 0 1px rgba(255, 255, 255, 0.02); /* Very light border-like shadow */
+}
+
+/* Tabs (Footer Navigation) */
+.hero-foot .tabs {
+    background-color: #1A1C1D; /* Even darker background for the footer tabs */
+    border-bottom: none;
+    padding: 10px 0;
+    box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.3); /* Shadow for the footer tabs */
+}
+
+.hero-foot .tabs ul {
+    border-bottom: none;
+    justify-content: center; /* Center the tabs */
+}
+
+.hero-foot .tabs ul li a {
+    color: #B0BEC5; /* Muted grey for tab links */
+    font-weight: 500;
+    transition: all 0.3s ease;
+    border-bottom: 2px solid transparent;
+    padding-bottom: 8px;
+    margin: 0 10px; /* Add some horizontal spacing between tabs */
+}
+
+.hero-foot .tabs ul li a:hover {
+    color: #E1F5FE; /* Very light blue on hover */
+    border-bottom-color: #42A5F5; /* Vibrant blue underline on hover */
+}
+
+.hero-foot .tabs ul li.is-active a {
+    color: #FFFFFF; /* White for the active tab link */
+    border-bottom-color: #42A5F5; /* Vibrant blue underline for the active tab */
+    font-weight: 600;
+}
+
+/* General Container (if you have other sections) */
+/* This will apply a slightly lighter dark background to content areas */
+.container:not(.is-fluid) {
+    /* Only apply to containers that are not within the hero section */
+    /* background-color: #212121; */ /* If you want distinct content blocks */
+    /* border-radius: 8px; */
+    /* padding: 20px; */
+    /* margin-bottom: 20px; */
+    /* box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); */
 }

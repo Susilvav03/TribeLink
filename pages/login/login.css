@@ -1,7 +1,87 @@
-    body {
-        color: #ffffff;
-        min-height: 100vh;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }
+/* Importing the same Google Font for consistency */
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap');
+
+/* Body styles are now primarily in the HTML style attribute for robustness */
+
+/* Styling for the login box */
+.box {
+    background-color: #1A202C; /* Dark blue-grey, consistent with hero section */
+    border-radius: 8px; /* Rounded corners */
+    padding: 2.5rem; /* More padding for a premium feel */
+    box-shadow: 0 0px 25px rgba(4, 253, 241, 0.5), /* Stronger dark shadow for depth */
+                0 0 0 1px rgb(247, 245, 245); /* Very subtle white border-like shadow */
+    max-width: 400px; /* Max width for the login form */
+    width: 90%; /* Responsive width */
+    color: #E0E0E0; /* Ensure text inside box is light */
+}
+
+/* Titles and labels within the box */
+.box .title {
+    color: #FFFFFF; /* White for the title */
+    margin-bottom: 1.5rem; /* More space below title */
+    font-weight: 700;
+    text-align: center;
+}
+
+.box .label {
+    color: #CFD8DC; /* Lighter grey for labels */
+    font-weight: 500;
+}
+
+/* Input field styling */
+.input {
+    background-color: #212121; /* Darker background for inputs */
+    border-color: #37474F; /* Darker border color */
+    color: #E0E0E0; /* Light text color for input values */
+    box-shadow: none; /* Remove default Bulma shadow */
+    transition: all 0.3s ease;
+}
+
+.input::placeholder {
+    color: #9E9E9E; /* Lighter placeholder text */
+}
+
+.input:focus,
+.input.is-link:focus { /* Explicitly target is-link when focused */
+    border-color: #42A5F5; /* Vibrant blue border on focus */
+    box-shadow: 0 0 0 0.125em rgba(66, 165, 245, 0.25); /* Light blue shadow on focus */
+    background-color: #262626; /* Slightly lighter dark background on focus */
+}
+
+/* Styling for the login button */
+.button.is-fullwidth {
+    background-color: #42A5F5; /* Vibrant blue background for the button */
+    color: #FFFFFF; /* White text */
+    font-weight: 600;
+    border: none;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    height: 3em; /* Slightly taller button */
+    margin-top: 1.5rem; /* Space above button */
+}
+
+.button.is-fullwidth:hover {
+    background-color: #64B5F6; /* Lighter blue on hover */
+    transform: translateY(-2px); /* Slight lift effect on hover */
+}
+
+/* Styling for the error message */
+#loginError {
+    color: #EF5350; /* Bulma's default danger red for errors */
+    font-weight: 500;
+}
+
+/* Styling for the "Don't have an account?" paragraph and link */
+p.has-text-centered {
+    color: #B0BEC5; /* Muted light grey for this text */
+    font-size: 0.95rem;
+    margin-top: 1.5rem !important; /* Ensure margin top */
+}
+
+p.has-text-centered a {
+    color: #42A5F5; /* Vibrant blue for the Sign Up link */
+    font-weight: 600;
+}
+
+p.has-text-centered a:hover {
+    color: #90CAF9; /* Lighter blue on hover */
+}

@@ -1,50 +1,93 @@
-    body {
-        background-color: #121212;
-        color: #ffffff;
-        min-height: 100vh;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        font-family: 'Segoe UI', sans-serif;
-    }
+/* Importing the same Google Font for consistency */
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap');
 
-    .box {
-        background-color: #1e1e1e;
-        padding: 2rem;
-        border-radius: 12px;
-        width: 100%;
-        max-width: 450px;
-        box-shadow: 0 0 20px rgba(0, 255, 255, 0.1);
-    }
+/* General Body Styles */
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    background-color: #121212; /* Deep dark background, consistent with main page and login */
+    color: #E0E0E0; /* Light grey for general text */
+    font-family: 'Roboto', sans-serif;
+    line-height: 1.6;
+}
 
-    .input,
-    .textarea {
-        background-color: #2a2a2a;
-        color: #ffffff;
-        border: none;
-    }
+/* Styling for the sign-up box (form container) */
+.box {
+    background-color: #1A202C;
+    border-radius: 8px;
+    padding: 2.5rem;
+    box-shadow: 0 0px 25px #3082c5, 0 0 0 1px rgb(255, 255, 255);
+    width: 100%;
+    max-width: 450px;
+    color: #E0E0E0;
+}
 
-    .input::placeholder {
-        color: #aaa;
-    }
+/* Titles and labels within the box */
+.box .title {
+    color: #FFFFFF; /* White for the title */
+    margin-bottom: 1.5rem; /* More space below title */
+    font-weight: 700;
+}
 
-    .label {
-        color: #f0f0f0;
-    }
+.box .label {
+    color: #CFD8DC; /* Lighter grey for labels */
+    font-weight: 500;
+}
 
-    .title {
-        color: #ffffff;
-    }
+/* Input field styling */
+.input {
+    background-color: #212121; /* Darker background for inputs */
+    border-color: #37474F; /* Darker border color */
+    color: #E0E0E0; /* Light text color for input values */
+    box-shadow: none; /* Remove default Bulma shadow */
+    transition: all 0.3s ease;
+}
 
-    .button.is-primary {
-        background-color: #00d1b2;
-        border: none;
-    }
+.input::placeholder {
+    color: #9E9E9E; /* Lighter placeholder text */
+}
 
-    .button.is-primary:hover {
-        background-color: #00b89c;
-    }
+.input:focus {
+    border-color: #42A5F5; /* Vibrant blue border on focus */
+    box-shadow: 0 0 0 0.125em rgba(66, 165, 245, 0.25); /* Light blue shadow on focus */
+    background-color: #262626; /* Slightly lighter dark background on focus */
+}
 
-    a {
-        color: #00d1b2;
-    }
+/* Styling for the sign-up button */
+.button.is-fullwidth {
+    background-color: #42A5F5; /* Vibrant blue background for the button, consistent with login */
+    color: #FFFFFF; /* White text */
+    font-weight: 600;
+    border: none;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    height: 3em; /* Slightly taller button */
+    margin-top: 1.5rem; /* Space above button */
+}
+
+.button.is-fullwidth:hover {
+    background-color: #64B5F6; /* Lighter blue on hover */
+    transform: translateY(-2px); /* Slight lift effect on hover */
+}
+
+/* Styling for the error message */
+#signupMessage {
+    color: #EF5350; /* Bulma's default danger red for errors */
+    font-weight: 500;
+}
+
+/* Styling for the "Already have an account?" paragraph and link */
+p.has-text-centered {
+    color: #B0BEC5; /* Muted light grey for this text */
+    font-size: 0.95rem;
+    margin-top: 1.5rem !important; /* Ensure margin top */
+}
+
+p.has-text-centered a {
+    color: #42A5F5; /* Vibrant blue for the Log In link */
+    font-weight: 600;
+}
+
+p.has-text-centered a:hover {
+    color: #90CAF9; /* Lighter blue on hover */
+}

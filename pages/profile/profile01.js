@@ -1,5 +1,18 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // Referencias a los elementos del DOM
+    // --- DOM Element References ---
+    const profileDisplay = document.getElementById('profileDisplay');
+    const profileEditFormContainer = document.getElementById('profileEditFormContainer');
+    const activitySummary = document.getElementById('activitySummary');
+
+    const showProfileBtn = document.getElementById('showProfileBtn');
+    const showActivityBtn = document.getElementById('showActivityBtn');
+    const editProfileBtn = document.getElementById('editProfileBtn');
+    const editProfileDisplayBtn = document.getElementById('editProfileDisplayBtn'); // "Edit Profile" button on the display view
+
+    const logoutBtnNav = document.getElementById('logoutBtnNav'); // Logout button in the navbar
+    const logoutBtnSidebar = document.getElementById('logoutBtnSidebar'); // Logout button in the sidebar
+    const logoutBtnBottom = document.getElementById('logoutBtnBottom'); // Bottom logout button
+
     const profileForm = document.getElementById('profileForm');
     const nameInput = document.getElementById('name');
     const lastnameInput = document.getElementById('lastname');
@@ -8,319 +21,333 @@ document.addEventListener('DOMContentLoaded', () => {
     const addressInput = document.getElementById('address');
     const cityInput = document.getElementById('city');
     const countryInput = document.getElementById('country');
-    const zipInput = document.getElementById('zip');
+
+    const displayName = document.getElementById('displayName');
+    const displayLastName = document.getElementById('displayLastName');
+    const displayEmail = document.getElementById('displayEmail');
+    const displayPhone = document.getElementById('displayPhone');
+    const displayAddress = document.getElementById('displayAddress');
+    const displayCity = document.getElementById('displayCity');
+    const displayCountry = document.getElementById('displayCountry');
+
+    const profileAvatarDisplay = document.getElementById('profileAvatarDisplay');
+    const profileAvatarEdit = document.getElementById('profileAvatarEdit');
+    const navAvatar = document.getElementById('navAvatar');
+    const navUsername = document.getElementById('navUsername');
+    const avatarUpload = document.getElementById('avatarUpload');
+    const avatarFileName = document.getElementById('avatarFileName');
+
     const logsContainer = document.getElementById('logsContainer');
-    const logoutBtn = document.getElementById('logoutBtn');
 
-    // --- Funciones para manejar datos del usuario y logs ---
+    // --- Utility Functions ---
 
-    // Carga los datos del perfil desde localStorage o devuelve un objeto vacío
+    // Function to handle validation errors
+    const showError = (element, message) => {
+        element.style.display = 'block';
+        element.textContent = message;
+    };
+
+    const hideError = (element) => {
+        element.style.display = 'none';
+        element.textContent = '';
+    };
+
+    // Input validations
+    const validateLength = (inputElement, fieldName, min, max) => {
+        const errorElement = document.getElementById(`${inputElement.id}Error`);
+        if (inputElement.value.trim().length < min || inputElement.value.trim().length > max) {
+            showError(errorElement, `${fieldName} must be between ${min}-${max} characters.`);
+            return false;
+        }
+        hideError(errorElement);
+        return true;
+    };
+
+    const validateEmail = (inputElement) => {
+        const errorElement = document.getElementById(`${inputElement.id}Error`);
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(inputElement.value.trim())) {
+            showError(errorElement, 'Enter a valid email address.');
+            return false;
+        }
+        hideError(errorElement);
+        return true;
+    };
+
+    const validatePhone = (inputElement) => {
+        const errorElement = document.getElementById(`${inputElement.id}Error`);
+        const phoneRegex = /^\d{7,15}$/; // Accepts 7 to 15 digits
+        if (inputElement.value.trim() !== '' && !phoneRegex.test(inputElement.value.trim())) {
+            showError(errorElement, 'Phone must be 7-15 digits.');
+            return false;
+        }
+        hideError(errorElement);
+        return true;
+    };
+
+
+    // --- Business Logic Functions ---
+
+    // Loads active user profile data from sessionStorage
     const loadUserProfile = () => {
-        const user = localStorage.getItem('userProfile');
-        return user ? JSON.parse(user) : {};
+        const userActiveString = sessionStorage.getItem('userActive');
+        return userActiveString ? JSON.parse(userActiveString) : null;
     };
 
-    // Guarda los datos del perfil en localStorage
+    // Saves active user profile data to sessionStorage
     const saveUserProfile = (userProfile) => {
-        localStorage.setItem('userProfile', JSON.stringify(userProfile));
+        sessionStorage.setItem('userActive', JSON.stringify(userProfile));
+        // Optional: Also update in localStorage if you want persistence across sessions
+        // This will depend on how you manage your global users. For now, only userActive.
+        let users = JSON.parse(localStorage.getItem('users')) || [];
+        const userIndex = users.findIndex(u => u.email === userProfile.email);
+        if (userIndex !== -1) {
+            users[userIndex] = userProfile;
+            localStorage.setItem('users', JSON.stringify(users));
+        }
     };
 
-    // Carga los logs desde localStorage o devuelve un array vacío
+    // Loads logs from localStorage
     const loadLogs = () => {
-        const logs = localStorage.getItem('userLogs');
-        return logs ? JSON.parse(logs) : [];
+        const userActive = loadUserProfile();
+        if (!userActive || !userActive.email) return [];
+        const allLogs = JSON.parse(localStorage.getItem('userLogs')) || {};
+        return allLogs[userActive.email] || [];
     };
 
-    // Guarda los logs en localStorage
-    const saveLogs = (logs) => {
-        localStorage.setItem('userLogs', JSON.stringify(logs));
-    };
-
-    // Añade un nuevo log al historial
+    // Saves a new log to localStorage
     const addLog = (action) => {
-        const logs = loadLogs();
-        const now = new Date();
-        const newLog = {
-            user: "Usuario Actual", // Podrías obtener el nombre de usuario de la sesión real
+        const userActive = loadUserProfile();
+        if (!userActive || !userActive.email) return;
+
+        const timestamp = new Date().toLocaleString();
+        const logEntry = {
+            user: userActive.email,
             action: action,
-            date: now.toLocaleDateString('es-ES'),
-            time: now.toLocaleTimeString('es-ES')
+            date: timestamp
         };
-        logs.unshift(newLog); // Añade el nuevo log al principio
-        saveLogs(logs);
-        renderLogs(); // Vuelve a renderizar los logs para que se vea el nuevo
+
+        let allLogs = JSON.parse(localStorage.getItem('userLogs')) || {};
+        if (!allLogs[userActive.email]) {
+            allLogs[userActive.email] = [];
+        }
+        allLogs[userActive.email].push(logEntry);
+        localStorage.setItem('userLogs', JSON.stringify(allLogs));
+        renderLogs(); // Update logs display
     };
 
-    // --- Funciones de Renderizado ---
-
-    // Rellena los campos del formulario con los datos del perfil cargados
+    // Renders profile information in the display view
     const renderUserProfile = () => {
         const userProfile = loadUserProfile();
-        nameInput.value = userProfile.name || '';
-        lastnameInput.value = userProfile.lastname || '';
-        emailInput.value = userProfile.email || '';
-        phoneInput.value = userProfile.phone || '';
-        addressInput.value = userProfile.address || '';
-        cityInput.value = userProfile.city || '';
-        countryInput.value = userProfile.country || '';
+
+        if (userProfile) {
+            displayName.textContent = userProfile.name || 'N/A';
+            displayLastName.textContent = userProfile.lastName || 'N/A';
+            displayEmail.textContent = userProfile.email || 'N/A';
+            displayPhone.textContent = userProfile.phone || 'N/A';
+            displayAddress.textContent = userProfile.address || 'N/A';
+            displayCity.textContent = userProfile.city || 'N/A';
+            displayCountry.textContent = userProfile.country || 'N/A';
+            // displayZip.textContent = userProfile.zip || 'N/A'; // Removed
+
+            // Load profile image or use placeholder
+            const avatarSrc = userProfile.avatar || 'https://via.placeholder.com/128/0000FF/FFFFFF?text=U';
+            profileAvatarDisplay.src = avatarSrc;
+            profileAvatarEdit.src = avatarSrc; // Also for the edit view
+            navAvatar.src = userProfile.avatar || 'https://via.placeholder.com/24/0000FF/FFFFFF?text=U'; // For the navbar
+            navUsername.textContent = userProfile.name || 'User';
+        } else {
+            // If no user, redirect to login
+            window.location.href = '../login/login.html';
+        }
     };
 
-    // Renderiza el historial de actividad en el contenedor de logs
+    // Populates the edit form with current profile data
+    const populateEditForm = () => {
+        const userProfile = loadUserProfile();
+        if (userProfile) {
+            nameInput.value = userProfile.name || '';
+            lastnameInput.value = userProfile.lastName || '';
+            emailInput.value = userProfile.email || ''; // Email is readonly
+            phoneInput.value = userProfile.phone || '';
+            addressInput.value = userProfile.address || '';
+            cityInput.value = userProfile.city || '';
+            countryInput.value = userProfile.country || '';
+            // zipInput.value = userProfile.zip || ''; // Removed
+
+            const avatarSrc = userProfile.avatar || 'https://via.placeholder.com/128/0000FF/FFFFFF?text=U';
+            profileAvatarEdit.src = avatarSrc;
+            avatarFileName.textContent = userProfile.avatar ? 'Avatar selected' : 'No file chosen'; // Update file name if avatar exists
+        }
+    };
+
+    // Renders logs in the activity section
     const renderLogs = () => {
         const logs = loadLogs();
+        logsContainer.innerHTML = ''; // Clear existing logs
+
         if (logs.length === 0) {
-            logsContainer.innerHTML = '<p>No hay actividad registrada.</p>';
+            logsContainer.innerHTML = '<p>No activity logs found.</p>';
             return;
         }
 
-        let logsHtml = `
-            <table class="table is-striped is-fullwidth">
-                <thead>
-                    <tr>
-                        <th>Usuario</th>
-                        <th>Acción</th>
-                        <th>Fecha</th>
-                        <th>Hora</th>
-                    </tr>
-                </thead>
-                <tbody>
-        `;
-
-        logs.forEach(log => {
-            logsHtml += `
-                <tr>
-                    <td>${log.user}</td>
-                    <td>${log.action}</td>
-                    <td>${log.date}</td>
-                    <td>${log.time}</td>
-                </tr>
-            `;
+        logs.reverse().forEach(log => { // Show most recent first
+            const p = document.createElement('p');
+            p.innerHTML = `<strong>${log.date}:</strong> ${log.action}`;
+            logsContainer.appendChild(p);
         });
-
-        logsHtml += `
-                </tbody>
-            </table>
-        `;
-        logsContainer.innerHTML = logsHtml;
     };
 
-    // --- Funciones de Validación ---
+    // --- View Management (Show/Hide sections) ---
+    const showSection = (sectionToShow) => {
+        profileDisplay.style.display = 'none';
+        profileEditFormContainer.style.display = 'none';
+        activitySummary.style.display = 'none';
 
-    // Función genérica para mostrar un mensaje de error debajo del input
-    const showError = (inputElement, message) => {
-        // Busca si ya existe un elemento p.help para el input (creado previamente)
-        let errorHelp = inputElement.nextElementSibling;
-        if (errorHelp && errorHelp.classList.contains('help')) {
-            errorHelp.textContent = message;
-            errorHelp.classList.add('is-danger');
-        } else {
-            // Crea un nuevo elemento p.help si no existe
-            errorHelp = document.createElement('p');
-            errorHelp.className = 'help is-danger';
-            errorHelp.textContent = message;
-            inputElement.parentNode.insertBefore(errorHelp, inputElement.nextSibling); // Inserta después del input
+        if (sectionToShow === 'profile') {
+            profileDisplay.style.display = 'block';
+            renderUserProfile(); // Ensure display is updated
+        } else if (sectionToShow === 'edit') {
+            profileEditFormContainer.style.display = 'block';
+            populateEditForm(); // Populate form when shown
+        } else if (sectionToShow === 'activity') {
+            activitySummary.style.display = 'block';
+            renderLogs(); // Load logs when shown
         }
-        inputElement.classList.add('is-danger'); // Marca el input en rojo con la clase de Bulma
-    };
 
-    // Función genérica para ocultar un mensaje de error
-    const hideError = (inputElement) => {
-        let errorHelp = inputElement.nextElementSibling;
-        if (errorHelp && errorHelp.classList.contains('help') && errorHelp.classList.contains('is-danger')) {
-            errorHelp.remove(); // Elimina el elemento de ayuda
-        }
-        inputElement.classList.remove('is-danger'); // Quita el marcado en rojo del input
-    };
+        // Update sidebar button active state
+        showProfileBtn.classList.remove('is-active');
+        showActivityBtn.classList.remove('is-active');
+        editProfileBtn.classList.remove('is-active');
 
-    // Valida que un campo no esté vacío (obligatorio)
-    const validateRequired = (inputElement, fieldName) => {
-        if (inputElement.value.trim() === '') {
-            showError(inputElement, `El ${fieldName} es obligatorio.`);
-            return false;
+        if (sectionToShow === 'profile') {
+            showProfileBtn.classList.add('is-active');
+        } else if (sectionToShow === 'edit') {
+            editProfileBtn.classList.add('is-active');
+        } else if (sectionToShow === 'activity') {
+            showActivityBtn.classList.add('is-active');
         }
-        hideError(inputElement);
-        return true;
-    };
-
-    // Valida el formato del correo electrónico usando una expresión regular
-    const validateEmail = (inputElement) => {
-        // Expresión regular para un formato de email básico (no es 100% estricta pero cubre la mayoría)
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        if (inputElement.value.trim() !== '' && !emailRegex.test(inputElement.value.trim())) {
-            showError(inputElement, 'Introduce un correo electrónico válido (ej. usuario@dominio.com).');
-            return false;
-        }
-        hideError(inputElement);
-        return true;
-    };
-
-    // Valida que el campo contenga solo números
-    const validateNumbersOnly = (inputElement, fieldName) => {
-        const numberRegex = /^\d+$/; // Expresión regular para uno o más dígitos
-        if (inputElement.value.trim() !== '' && !numberRegex.test(inputElement.value.trim())) {
-            showError(inputElement, `El ${fieldName} debe contener solo números.`);
-            return false;
-        }
-        hideError(inputElement);
-        return true;
-    };
-
-    // Valida la longitud mínima y máxima para campos de texto (ej. nombre, apellido)
-    const validateLength = (inputElement, fieldName, minLength, maxLength) => {
-        const value = inputElement.value.trim();
-        if (value.length < minLength) {
-            showError(inputElement, `El ${fieldName} debe tener al menos ${minLength} caracteres.`);
-            return false;
-        }
-        if (maxLength && value.length > maxLength) {
-            showError(inputElement, `El ${fieldName} no debe exceder los ${maxLength} caracteres.`);
-            return false;
-        }
-        hideError(inputElement);
-        return true;
     };
 
     // --- Event Listeners ---
 
-    // Maneja el envío del formulario de perfil
-    profileForm.addEventListener('submit', (event) => {
-        event.preventDefault(); // Evita el envío del formulario por defecto
+    // Sidebar Navigation and action buttons
+    showProfileBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        showSection('profile');
+    });
 
-        // Reinicia todos los errores visibles antes de revalidar
-        document.querySelectorAll('.input.is-danger').forEach(el => el.classList.remove('is-danger'));
-        document.querySelectorAll('.help.is-danger').forEach(el => el.remove());
+    editProfileBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        showSection('edit');
+    });
 
-        let isValid = true; // Bandera para controlar si el formulario es válido
+    editProfileDisplayBtn.addEventListener('click', (e) => { // "Edit Profile" button on the display view
+        e.preventDefault();
+        showSection('edit');
+    });
 
-        // --- Aplicar todas las validaciones ---
-        // Campos requeridos y con longitud mínima/máxima
-        if (!validateRequired(nameInput, 'nombre')) isValid = false;
-        else if (!validateLength(nameInput, 'nombre', 2, 50)) isValid = false; // Nombre entre 2 y 50 caracteres
+    showActivityBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        showSection('activity');
+    });
 
-        if (!validateRequired(lastnameInput, 'apellido')) isValid = false;
-        else if (!validateLength(lastnameInput, 'apellido', 2, 50)) isValid = false; // Apellido entre 2 y 50 caracteres
-
-        if (!validateRequired(emailInput, 'correo')) isValid = false;
-        else if (!validateEmail(emailInput)) isValid = false;
-
-        // Teléfono: no requerido, pero si tiene valor, debe ser numérico y con longitud adecuada
-        if (phoneInput.value.trim() !== '') {
-            if (!validateNumbersOnly(phoneInput, 'teléfono')) isValid = false;
-            else if (!validateLength(phoneInput, 'teléfono', 7, 15)) isValid = false; // Teléfono entre 7 y 15 dígitos
+    // Avatar upload handling
+    avatarUpload.addEventListener('change', (event) => {
+        const file = event.target.files[0];
+        if (file) {
+            avatarFileName.textContent = file.name;
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                profileAvatarEdit.src = e.target.result;
+            };
+            reader.readAsDataURL(file);
         } else {
-            hideError(phoneInput); // Asegurarse de que no haya error si está vacío
+            avatarFileName.textContent = 'No file chosen';
+            profileAvatarEdit.src = loadUserProfile().avatar || 'https://via.placeholder.com/128/0000FF/FFFFFF?text=U'; // Reset to current avatar or placeholder
         }
+    });
 
+    // Profile form submission
+    profileForm.addEventListener('submit', (e) => {
+        e.preventDefault();
 
-        // Dirección, Ciudad, País: Se pueden hacer requeridos o no, en este caso los he dejado opcionales
-        // pero puedes descomentar las líneas `validateRequired` si los necesitas obligatorios.
+        // Perform validations before saving
+        let isValid = true;
+        isValid = validateLength(nameInput, 'Name', 2, 50) && isValid;
+        isValid = validateLength(lastnameInput, 'Last name', 2, 50) && isValid;
+        // Email is readonly, no format validation needed here, only presence if edited
+        isValid = validatePhone(phoneInput) && isValid;
         if (addressInput.value.trim() !== '') {
-            if (!validateLength(addressInput, 'dirección', 5, 100)) isValid = false;
-        } else {
-            hideError(addressInput);
+            isValid = validateLength(addressInput, 'Address', 5, 100) && isValid;
         }
-
         if (cityInput.value.trim() !== '') {
-            if (!validateLength(cityInput, 'ciudad', 2, 50)) isValid = false;
-        } else {
-            hideError(cityInput);
+            isValid = validateLength(cityInput, 'City', 2, 50) && isValid;
         }
-
         if (countryInput.value.trim() !== '') {
-            if (!validateLength(countryInput, 'país', 2, 50)) isValid = false;
-        } else {
-            hideError(countryInput);
+            isValid = validateLength(countryInput, 'Country', 2, 50) && isValid;
         }
-
-        // Código Postal: no requerido, pero si tiene valor, debe ser numérico y con longitud adecuada
-        if (zipInput.value.trim() !== '') {
-            if (!validateNumbersOnly(zipInput, 'código postal')) isValid = false;
-            else if (!validateLength(zipInput, 'código postal', 3, 10)) isValid = false; // Ej: Códigos postales de 3 a 10 dígitos
-        } else {
-            hideError(zipInput); // Asegurarse de que no haya error si está vacío
-        }
+        // isValid = validateZip(zipInput) && isValid; // Removed
 
 
-        // Si alguna validación falló, se notifica al usuario y se detiene el proceso
         if (!isValid) {
-            alert('Por favor, corrige los errores resaltados en el formulario.');
+            alert('Please correct the errors in the form.');
             return;
         }
 
-        // Si todas las validaciones pasan, se guarda la información
-        const updatedProfile = {
-            name: nameInput.value,
-            lastname: lastnameInput.value,
-            email: emailInput.value,
-            phone: phoneInput.value,
-            address: addressInput.value,
-            city: cityInput.value,
-            country: countryInput.value,
-            zip: zipInput.value
-        };
+        const userProfile = loadUserProfile();
+        if (userProfile) {
+            userProfile.name = nameInput.value.trim();
+            userProfile.lastName = lastnameInput.value.trim();
+            userProfile.phone = phoneInput.value.trim();
+            userProfile.address = addressInput.value.trim();
+            userProfile.city = cityInput.value.trim();
+            userProfile.country = countryInput.value.trim();
+            // userProfile.zip = zipInput.value.trim(); // Removed
+            userProfile.avatar = profileAvatarEdit.src; // Save image as base64
 
-        saveUserProfile(updatedProfile); // Guarda el perfil actualizado
-        addLog('Información de perfil actualizada'); // Registra la acción
-        alert('¡Perfil actualizado con éxito!'); // Notifica al usuario
-    });
-
-    // --- Validaciones en tiempo real (al perder el foco del campo) ---
-    // Esto es útil para dar feedback inmediato al usuario
-    nameInput.addEventListener('blur', () => {
-        validateRequired(nameInput, 'nombre');
-        validateLength(nameInput, 'nombre', 2, 50);
-    });
-    lastnameInput.addEventListener('blur', () => {
-        validateRequired(lastnameInput, 'apellido');
-        validateLength(lastnameInput, 'apellido', 2, 50);
-    });
-    emailInput.addEventListener('blur', () => {
-        validateRequired(emailInput, 'correo');
-        validateEmail(emailInput);
-    });
-    phoneInput.addEventListener('blur', () => {
-        validateNumbersOnly(phoneInput, 'teléfono');
-        if (phoneInput.value.trim() !== '') {
-            validateLength(phoneInput, 'teléfono', 7, 15);
-        }
-    });
-    addressInput.addEventListener('blur', () => {
-        if (addressInput.value.trim() !== '') {
-            validateLength(addressInput, 'dirección', 5, 100);
-        } else {
-            hideError(addressInput); // Si se deja vacío y no es requerido, quitar error
-        }
-    });
-    cityInput.addEventListener('blur', () => {
-        if (cityInput.value.trim() !== '') {
-            validateLength(cityInput, 'ciudad', 2, 50);
-        } else {
-            hideError(cityInput);
-        }
-    });
-    countryInput.addEventListener('blur', () => {
-        if (countryInput.value.trim() !== '') {
-            validateLength(countryInput, 'país', 2, 50);
-        } else {
-            hideError(countryInput);
+            saveUserProfile(userProfile);
+            addLog('Profile updated');
+            alert('Profile updated successfully!');
+            showSection('profile'); // Return to profile view
         }
     });
 
-    // Maneja el clic en el botón de cerrar sesión
-    logoutBtn.addEventListener('click', () => {
-        addLog('Sesión cerrada'); // Registra la acción de cerrar sesión
-        // En una aplicación real, aquí borrarías la sesión del usuario (e.g., tokens, cookies)
-        // y lo redirigirías a la página de inicio de sesión.
-        alert('Has cerrado sesión.');
-        // Opcional: Redirigir al usuario (ejemplo: window.location.href = '/login.html';)
-        // Para limpiar localStorage al cerrar sesión (opcional, dependiendo de tu lógica):
-        // localStorage.removeItem('userProfile');
-        // localStorage.removeItem('userLogs');
-    });
+    // Handle logout button clicks
+    const handleLogout = () => {
+        addLog('Session logged out');
+        sessionStorage.removeItem('userActive'); // Remove active session
+        alert('You have been logged out.');
+        window.location.href = '../login/login.html'; // Redirect to login
+    };
 
-    // --- Inicialización ---
-    // Carga y muestra los datos del perfil y los logs al cargar la página
+    logoutBtnNav.addEventListener('click', handleLogout);
+    logoutBtnSidebar.addEventListener('click', handleLogout);
+    logoutBtnBottom.addEventListener('click', handleLogout);
+
+    // --- Initialization on page load ---
+
+    // Load and display profile data on start
     renderUserProfile();
-    renderLogs();
-    addLog('Inicio de sesión'); // Registra que el usuario ha "iniciado sesión" al cargar la página
+    showSection('profile'); // Show profile view by default
+
+    // Handle the "navbar-burger" for mobile devices (Bulma code)
+    const $navbarBurgers = Array.prototype.slice.call(document.querySelectorAll('.navbar-burger'), 0);
+    if ($navbarBurgers.length > 0) {
+        $navbarBurgers.forEach(el => {
+            el.addEventListener('click', () => {
+                const target = el.dataset.target;
+                const $target = document.getElementById(target);
+                el.classList.toggle('is-active');
+                $target.classList.toggle('is-active');
+            });
+        });
+    }
+
+    // Initialize session log if user just logged in
+    const userActive = loadUserProfile();
+    if (userActive && !sessionStorage.getItem('loggedSession')) {
+        addLog('Session started');
+        sessionStorage.setItem('loggedSession', 'true'); // Mark that session start log has been recorded
+    }
 });
