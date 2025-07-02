@@ -8,8 +8,7 @@ document.getElementById("signupForm").addEventListener("submit", (e) => {
         phone : document.getElementById("phone").value,
         country : document.getElementById("country").value,
         city : document.getElementById("city").value,
-        address : document.getElementById("address").value,
-
+        password : document.getElementById("password").value,
     };
     
     let users = JSON.parse(localStorage.getItem("users")) || [];

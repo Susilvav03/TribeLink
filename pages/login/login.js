@@ -8,6 +8,7 @@ document.getElementById("loginForm").addEventListener("submit", (e) => {
     const usuarioEncontrado = users.find(u => u.email === emailIngresado);
 
     if (usuarioEncontrado)  {
+        sessionStorage.setItem("userActive", JSON.stringify(userFound))
         message.textContent = "Iniciando sesion...";
         setTimeout(() => {
         window.location.href = "../profile/profile.html";
@@ -15,8 +16,5 @@ document.getElementById("loginForm").addEventListener("submit", (e) => {
     } else {
         message.textContent = "Usuario no registrado";
     }
-
-
-
 
 });
