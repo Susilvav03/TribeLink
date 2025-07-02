@@ -1,4 +1,4 @@
-const userActive = JSON.parse(sessionStorage.getItem("userAvtive"));
+const userActive = JSON.parse(sessionStorage.getItem("userActive"));
 
 if (!userActive) {
     window.location.href = "../../pages/login/login.html";
