@@ -1,41 +1,39 @@
-<!-- El index es el login, si el usuario no está logueado lo redirige al sign up -->
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title> Log in - TribeLink </title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
     <link rel="stylesheet" href="./login.css">
     <link rel="shortcut icon" href="../../assets/src/icons/page_icon.png" type="image/x-icon">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
 </head>
 
-<body class="body has-background-black-ter">
-    <div class="box has-background-grey-darker" data-theme="dark">
-        <h1 class="title is-4 has-text-white-bis">Welcome again to <strong>TribeLink</strong></h1>
-
+<body class="is-flex is-justify-content-center is-align-items-center" style="min-height: 100vh; background-color: #121212;">
+    <div class="box" data-theme="dark">
+        <h1 class="title is-4">Welcome again to <strong>TribeLink</strong></h1>
         <form id="loginForm">
             <div class="field">
-                <label class="label has-text-white-bis">Email</label>
+                <label class="label">Email</label>
                 <div class="control">
                     <input id="loginEmail" class="input is-link" type="email" placeholder="raul@example.com" required />
                 </div>
             </div>
             <div class="field">
-                <label class="label has-text-white-bis">Password</label>
+                <label class="label">Password</label>
                 <div class="control">
                     <input id="loginPassword" class="input" type="password" placeholder="********" required>
                 </div>
             </div>
-            <button id="submit" type="submit" class="button has-background-link has-text-white-bis is-fullwidth">Log In</button>
+            <button id="submit" type="submit" class="button is-fullwidth">Log In</button>
             <p id="loginError" class="has-text-danger has-text-centered mt-3"></p>
-
-            <p class="has-text-centered mt-4 has-text-grey-light">
+            <p class="has-text-centered mt-4">
                 Don’t have an account? <a href="../signUp/sign_up.html"><strong>Sign Up</strong></a>
             </p>
         </form>
     </div>
-    <script src="./login.js"> </script>
+    <script src="./login.js"></script>
 </body>
 
 </html>

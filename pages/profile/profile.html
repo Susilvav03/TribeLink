@@ -1,141 +1,192 @@
-<!-- Esta página muestra el perfil del usuario y muestra nombre, apellido, email, teléfono, país, cuidad, dirección y
-código postal. Tiene opción de Actualizar información y un botón para cerrar sesión. También tiene una pestaña que 
-se puede llamar historial, logs o actividad, mostrando acciones importantes (Inicios de seción, crear, editar, eliminar imágenes o notas, etc).
-
-El log debe incluir Usuario, acción, fecha y hora. -->
-
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <title>Profile - TribeLink</title>
-    <link rel="stylesheet" href="./profile.css">
-    <link rel="shortcut icon" href="../../assets/src/icons/page_icon.png" type="image/x-xicon">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+    <link rel="stylesheet" href="./profile.css"> <link rel="shortcut icon" href="../../assets/src/icons/page_icon.png" type="image/x-icon">
 </head>
 
-<body>
-
-    <div class="topbar">
-        <div>
-            <strong>Riwi</strong>
-            <a href="../images/images.html"><span class="ml-4">Images</span></a>
-            <a href="../notes/notes.html"><span class="ml-4">Notes</span></a>
-            <a href="../logs/logs.html"><span class="ml-4">Logs</span></a>
-        </div>
-        <div class="dropdown is-right is-hoverable" id="user-dropdown">
-            <div class="dropdown-trigger">
-                <button class="button" aria-haspopup="true" aria-controls="dropdown-menu">
-                    <span>Sanca the boss</span>
-                    <span class="icon is-small">
-                        <i class="fas fa-angle-down" aria-hidden="true"></i>
+<body class="is-flex is-flex-direction-column" style="min-height: 100vh; background-color: #121212;">
+    <div class="topbar hero-head">
+        <nav class="navbar is-dark">
+            <div class="container">
+                <div class="navbar-brand">
+                    <a class="navbar-item has-text-white-bis is-size-2"><strong>TribeLink</strong></a>
+                    <span class="navbar-burger" data-target="navbarMenuHeroA">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                        <span></span>
                     </span>
-                </button>
+                </div>
+                <div id="navbarMenuHeroA" class="navbar-menu">
+                    <div class="navbar-end">
+                        <a href="../images/images.html" class="navbar-item">Images</a>
+                        <a href="../notes/notes.html" class="navbar-item">Notes</a>
+                        <a href="../logs/logs.html" class="navbar-item">Logs</a>
+
+                        <div class="navbar-item has-dropdown is-hoverable">
+                            <a class="navbar-link" id="navUsername">
+                                </a>
+                            <div class="navbar-dropdown is-right">
+                                <a class="navbar-item" href="#">
+                                    View Profile
+                                </a>
+                                <a class="navbar-item" href="#" id="logoutBtnNav">
+                                    Log Out
+                                </a>
+                            </div>
+                        </div>
+                        <figure class="navbar-item image">
+                            <img id="navAvatar" class="is-rounded" src="https://via.placeholder.com/24/0000FF/FFFFFF?text=U" alt="Profile Avatar">
+                        </figure>
+                    </div>
+                </div>
             </div>
-            <div class="dropdown-menu" id="dropdown-menu" role="menu">
-                <div class="dropdown-content">
-                    <a href="./profile.html" class="dropdown-item"> Profile </a>
-                    <a href="../login/login.html" class="dropdown-item"> Sign out </a>
+        </nav>
+    </div>
+
+    <section class="section is-flex-grow-1">
+        <div class="container">
+            <div class="columns">
+                <div class="column is-3">
+                    <aside class="menu sidebar p-4">
+                        <p class="menu-label has-text-white-bis">
+                            General
+                        </p>
+                        <ul class="menu-list">
+                            <li><a href="#" class="is-active" id="showProfileBtn">My Profile</a></li>
+                            <li><a href="#" id="editProfileBtn">Edit Profile</a></li>
+                            <li><a href="#" id="showActivityBtn">Activity Summary</a></li>
+                        </ul>
+                        <p class="menu-label has-text-white-bis">
+                            Actions
+                        </p>
+                        <ul class="menu-list">
+                            <li><a href="#" id="logoutBtnSidebar">Logout</a></li>
+                        </ul>
+                    </aside>
+                </div>
+
+                <div class="column is-9">
+                    <div id="profileDisplay" class="card-container box">
+                        <div class="media">
+                            <div class="media-left">
+                                <figure class="image is-128x128">
+                                    <img class="is-rounded" id="profileAvatarDisplay" src="https://via.placeholder.com/128/0000FF/FFFFFF?text=U" alt="Profile Avatar">
+                                </figure>
+                            </div>
+                            <div class="media-content">
+                                <p class="title is-4 has-text-white" id="displayName">Loading...</p>
+                                <p class="subtitle is-6 has-text-grey-light" id="displayLastName"></p>
+                                <p class="has-text-grey-light"><strong>Email:</strong> <span id="displayEmail"></span></p>
+                                <p class="has-text-grey-light"><strong>Phone:</strong> <span id="displayPhone"></span></p>
+                                <p class="has-text-grey-light"><strong>Address:</strong> <span id="displayAddress"></span></p>
+                                <p class="has-text-grey-light"><strong>City:</strong> <span id="displayCity"></span></p>
+                                <p class="has-text-grey-light"><strong>Country:</strong> <span id="displayCountry"></span></p>
+                            </div>
+                        </div>
+                        <div class="content mt-5 has-text-right">
+                            <button class="button is-info" id="editProfileDisplayBtn">Edit Profile</button>
+                        </div>
+                    </div>
+
+                    <div id="profileEditFormContainer" class="card-container box" style="display: none;">
+                        <h2 class="title is-4 has-text-white">Edit Profile</h2>
+                        <form id="profileForm">
+                            <div class="field has-text-centered mb-5">
+                                <figure class="image is-128x128 is-inline-block">
+                                    <img class="is-rounded" id="profileAvatarEdit" src="https://via.placeholder.com/128/0000FF/FFFFFF?text=U" alt="Profile Avatar">
+                                </figure>
+                                <div class="file has-name is-fullwidth is-boxed is-info mt-3">
+                                    <label class="file-label">
+                                        <input class="file-input" type="file" name="resume" id="avatarUpload" accept="image/*">
+                                        <span class="file-cta">
+                                            <span class="file-icon">
+                                                <i class="fas fa-upload"></i>
+                                            </span>
+                                            <span class="file-label">
+                                                Choose an avatar…
+                                            </span>
+                                        </span>
+                                        <span class="file-name" id="avatarFileName">
+                                            No file chosen
+                                        </span>
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div class="field">
+                                <label class="label has-text-white-bis">Name</label>
+                                <div class="control">
+                                    <input class="input is-medium" type="text" id="name">
+                                </div>
+                                <p class="help is-danger" id="nameError" style="display: none;"></p>
+                            </div>
+                            <div class="field">
+                                <label class="label has-text-white-bis">Last Name</label>
+                                <div class="control">
+                                    <input class="input is-medium" type="text" id="lastname">
+                                </div>
+                                <p class="help is-danger" id="lastnameError" style="display: none;"></p>
+                            </div>
+                            <div class="field">
+                                <label class="label has-text-white-bis">Email</label>
+                                <div class="control">
+                                    <input class="input is-medium" type="email" id="profileEmail" readonly>
+                                </div>
+                            </div>
+                            <div class="field">
+                                <label class="label has-text-white-bis">Phone</label>
+                                <div class="control">
+                                    <input class="input is-medium" type="tel" id="phone">
+                                </div>
+                                <p class="help is-danger" id="phoneError" style="display: none;"></p>
+                            </div>
+                            <div class="field">
+                                <label class="label has-text-white-bis">Address</label>
+                                <div class="control">
+                                    <input class="input is-medium" type="text" id="address">
+                                </div>
+                                <p class="help is-danger" id="addressError" style="display: none;"></p>
+                            </div>
+                            <div class="field">
+                                <label class="label has-text-white-bis">City</label>
+                                <div class="control">
+                                    <input class="input is-medium" type="text" id="city">
+                                </div>
+                                <p class="help is-danger" id="cityError" style="display: none;"></p>
+                            </div>
+                            <div class="field">
+                                <label class="label has-text-white-bis">Country</label>
+                                <div class="control">
+                                    <input class="input is-medium" type="text" id="country">
+                                </div>
+                                <p class="help is-danger" id="countryError" style="display: none;"></p>
+                            </div>
+
+                            <div class="control mt-5">
+                                <button type="submit" class="button is-info is-fullwidth">Save Changes</button>
+                            </div>
+                        </form>
+                    </div>
+
+                    <div id="activitySummary" class="card-container box" style="display: none;">
+                        <h2 class="title is-4 has-text-white">Activity Summary</h2>
+                        <div id="logsContainer" class="content has-text-grey-light">
+                            </div>
+                    </div>
+
+                    <button class="button is-danger mt-4 is-fullwidth" id="logoutBtnBottom">Sign Out</button>
                 </div>
             </div>
         </div>
-    </div>
+    </section>
 
-    <div class="columns m-0" style="min-height: 100vh;">
-        <aside class="column is-2 sidebar p-4">
-            <p class="menu-label has-text-centered has-text-white is-size-5 mb-3">Menu</p>
-            <ul class="menu-list">
-                <li><a href="../images/images.html">Images</a></li>
-                <li><a href="../notes/notes.html">Notes</a></li>
-                <li><a href="../logs/logs.html">Logs</a></li>
-            </ul>
-        </aside>
-
-        <div class="column is-10 p-4">
-            <div class="profile-container">
-                <h1 class="title is-4 has-text-black">User Profile</h1>
-
-                <div class="content">
-                    <p><strong>Name:</strong> Sanca the boss</p>
-                    <p><strong>Email:</strong> sancatheboss@example.com</p>
-                    <p><strong>Phone:</strong> +1 (555) 123-4567</p>
-                    <p><strong>Address:</strong> 123 Main St</p>
-                    <p><strong>City:</strong> Bello</p>
-                    <p><strong>Country:</strong> Colombia</p>
-                    <p><strong>Role:</strong> Administrator</p>
-                    <hr>
-                </div>
-
-                <h2 class="subtitle is-5 has-text-black">Update Information</h2>
-                <form id="profileForm">
-                    <div class="field">
-                        <label class="label">Name</label>
-                        <div class="control">
-                            <input class="input" type="text" id="name" value="Sanca" placeholder="Sanca">
-                        </div>
-                    </div>
-                    <div class="field">
-                        <label class="label">Last Name</label>
-                        <div class="control">
-                            <input class="input" type="text" id="lastname" value="The Boss" placeholder="The Boss">
-                        </div>
-                    </div>
-                    <div class="field">
-                        <label class="label">Email</label>
-                        <div class="control">
-                            <input class="input" type="email" id="profileEmail" value="sancatheboss@example.com" placeholder="sancatheboss@example.com">
-                        </div>
-                    </div>
-                    <div class="field">
-                        <label class="label">Phone</label>
-                        <div class="control">
-                            <input class="input" type="tel" id="phone" value="+1 (555) 123-4567" placeholder="+1 (555) 123-4567">
-                        </div>
-                    </div>
-                    <div class="field">
-                        <label class="label">Address</label>
-                        <div class="control">
-                            <input class="input" type="text" id="address" value="123 Main St" placeholder="123 Main St">
-                        </div>
-                    </div>
-                    <div class="field">
-                        <label class="label">City</label>
-                        <div class="control">
-                            <input class="input" type="text" id="city" value="Bello" placeholder="Bello">
-                        </div>
-                    </div>
-                    <div class="field">
-                        <label class="label">Country</label>
-                        <div class="control">
-                            <input class="input" type="text" id="country" value="Colombia" placeholder="Colombia">
-                        </div>
-                    </div>
-                    <div class="control mt-5">
-                        <button class="button is-info">Update Profile</button>
-                    </div>
-                </form>
-
-                <hr class="my-5">
-                <h2 class="subtitle is-5 has-text-black">Activity Summary</h2>
-                    <div id="logsContainer" class="content">
-                        <p>Recent activity logs will appear here. (e.g., Login, Note Creation, Image Upload) [cite: 131, 134, 135]</p>
-                        <p>
-                            * Log 1: Login - 2025-06-26 16:32 [cite: 134, 139]
-                        </p>
-                        <p>
-                            * Log 2: Created Note "Meeting Agenda" - 2025-06-27 10:00 [cite: 135, 139]
-                        </p>
-                        <p>
-                            * Log 3: Uploaded Image "Vacation.jpg" - 2025-06-28 14:15 [cite: 135, 139]
-                        </p>
-                    </div>
-                <button class="button is-danger mt-4" id="logoutBtn">Sign Out</button>
-            </div>
-        </div>
-    </div>
     <script src="./profile01.js"></script>
-    <script src="../../assets/scripts/middleware.js"></script>
-    </body>
+</body>
 
 </html>

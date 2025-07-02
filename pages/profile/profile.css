@@ -1,60 +1,180 @@
-/* Add this to your shared.css */
-.profile-container {
-    background-color: #ffffff; /* White background */
+/* Importing the same Google Font for consistency */
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap');
+
+/* General Body Styles */
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    background-color: #121212 !important; /* Deep dark background */
+    color: #E0E0E0 !important; /* Light grey for general text */
+    font-family: 'Roboto', sans-serif;
+    line-height: 1.6;
+}
+
+/* Topbar/Navbar Styling */
+
+.topbar {
+    background-color: #1A202C !important; /* Dark blue-grey, consistent with other dark elements */
+    padding: 0; /* Restore appropriate padding */
+    position: sticky; /* Make it stick to the top */
+    top: 0;
+    z-index: 100; /* Ensure it stays on top of other content */
+    width: 100%;
+}
+
+.topbar .navbar-item {
+    color: #e0e0e0 !important; /* Light text for navbar items */
+    font-weight: 500;
+}
+
+.topbar .navbar-item.has-dropdown .navbar-link {
+    color: #E0E0E0 !important;
+}
+
+.topbar .navbar-dropdown {
+    background-color: #2a2e3a !important; /* Darker background for dropdown */
+    border: none;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.topbar .navbar-dropdown .navbar-item {
+    color: #e0e0e0 !important;
+    padding-right: 1.5rem;
+}
+
+.topbar .navbar-dropdown .navbar-item:hover {
+    background-color: #3f4453 !important; /* Lighter background on hover */
+    color: #ffffff !important;
+}
+
+/* Hero Section Customization */
+.hero.is-dark {
+    background-color: #1A202C; /* Darker blue-grey for the hero section */
+}
+
+.hero-body .title,
+.hero-body .subtitle {
+    color: #ffffff; /* White text for titles */
+}
+
+/* Specific styling for the section that contains profile data and edit form */
+.section {
+    padding: 2rem 1.5rem; /* Adjust padding as needed */
+}
+
+.card-container {
+    background-color: #2c2c2c; /* Darker background for content cards */
     border-radius: 8px;
     padding: 1.5rem;
-    box-shadow: 0 2px 3px rgba(10, 10, 10, 0.1), 0 0 0 1px rgba(10, 10, 10, 0.1);
-    margin: 1rem; /* Adjust margin as needed */
-    color: #363636; /* Ensure text inside is dark */
-}
-.profile-container h1, .profile-container h2 {
-    color: #363636; /* Ensure headings are dark */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+    margin-bottom: 1.5rem; /* Spacing between cards */
 }
 
-    body {
-        background-color: #1f1f1f;
-    }
+.card-container .title,
+.card-container .subtitle,
+.card-container .label {
+    color: #ffffff; /* White text for titles, subtitles, and labels */
+}
 
-    .sidebar {
-        background-color: #011213;
-        border-radius: 6px;
-    }
+.card-container .has-text-grey-light {
+    color: #B0BEC5 !important; /* Muted grey for subtle text */
+}
 
-    .sidebar .menu-label,
-    .sidebar .menu-list a {
-        color: white !important;
-    }
+/* Input field styling */
+.input.is-medium {
+    background-color: #3a3a3a;
+    border-color: #4a4a4a;
+    color: #e0e0e0;
+}
 
-    .sidebar .menu-list a:hover {
-        background-color: #1e82b1;
-        color: white !important;
-    }
+.input.is-medium::placeholder {
+    color: #888;
+}
 
-    .card-container {
-        background-color: #2c2c2c;
-        border-radius: 8px;
-        padding: 1.5rem;
-    }
+.input.is-medium:focus {
+    border-color: #42A5F5; /* Vibrant blue on focus */
+    box-shadow: 0 0 0 0.125em rgba(66, 165, 245, 0.25);
+}
 
-    .topbar {
-        background-color: #e4e4e471;
-        padding: 1rem;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        border-bottom: 1px solid #ccc;
-    }
+/* Button Styling (Update and Logout) */
+.button.is-info {
+    background-color: #2196F3 !important; /* Blue for info actions */
+    color: #FFFFFF !important;
+    font-weight: 600;
+    border: none !important;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    height: 3em !important;
+}
 
-    .topbar .user {
-        display: flex;
-        align-items: center;
-        gap: 10px;
-    }
+.button.is-info:hover {
+    background-color: #64B5F6 !important;
+    transform: translateY(-2px);
+}
 
-    .dropdown.is-hoverable .dropdown-menu {
-    display: none; 
-    }
+.button.is-danger {
+    background-color: #EF5350 !important; /* Red for danger actions like sign out */
+    color: #FFFFFF !important;
+    font-weight: 600;
+    border: none !important;
+    transition: background-color 0.3s ease;
+    height: 3em !important;
+}
 
-    .dropdown.is-hoverable:hover .dropdown-menu {
-    display: block; 
-    }
+.button.is-danger:hover {
+    background-color: #E57373 !important;
+}
+
+/* Specific styling for the HR line */
+hr {
+    background-color: rgba(255, 255, 255, 0.1) !important; /* Light transparent line */
+    height: 1px !important;
+    border: none !important;
+}
+
+/* Activity Summary / Logs Container */
+#logsContainer {
+    background-color: #212121 !important; /* Slightly darker background for logs */
+    border-radius: 6px;
+    padding: 1rem !important;
+    max-height: 250px; /* Example max height for scrollability */
+    overflow-y: auto; /* Enable scrolling for logs */
+    border: 1px solid #333; /* Subtle border */
+}
+
+#logsContainer p {
+    margin-bottom: 0.5rem;
+    line-height: 1.4;
+}
+
+#logsContainer p:last-child {
+    margin-bottom: 0;
+}
+
+/* Sidebar styling */
+.sidebar {
+    background-color: #2c2c2c; /* Consistent with card containers */
+    border-radius: 8px;
+    padding: 1.5rem;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+}
+
+.sidebar .menu-label {
+    color: #B0BEC5 !important; /* Muted grey for menu labels */
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 0.75rem;
+}
+
+.sidebar .menu-list a {
+    color: #e0e0e0 !important; /* Light text for sidebar links */
+    border-radius: 4px;
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.sidebar .menu-list a.is-active,
+.sidebar .menu-list a:hover {
+    background-color: #42A5F5 !important; /* Vibrant blue for active/hover */
+    color: #ffffff !important;
+}
