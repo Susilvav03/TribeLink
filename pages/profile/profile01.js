@@ -63,7 +63,6 @@ document.addEventListener('DOMContentLoaded', () => {
         addressInput.value = userProfile.address || '';
         cityInput.value = userProfile.city || '';
         countryInput.value = userProfile.country || '';
-        zipInput.value = userProfile.zip || '';
     };
 
     // Renderiza el historial de actividad en el contenedor de logs
@@ -306,13 +305,6 @@ document.addEventListener('DOMContentLoaded', () => {
             hideError(countryInput);
         }
     });
-    zipInput.addEventListener('blur', () => {
-        validateNumbersOnly(zipInput, 'código postal');
-        if (zipInput.value.trim() !== '') {
-            validateLength(zipInput, 'código postal', 3, 10);
-        }
-    });
-
 
     // Maneja el clic en el botón de cerrar sesión
     logoutBtn.addEventListener('click', () => {
