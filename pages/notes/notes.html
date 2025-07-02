@@ -1,93 +1,81 @@
-<!-- Esta página muestra las notas subidas por todos y el usuario solo puede eliminar, editar o crear las notas propias -->
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <title>Notes - TribeLink</title>
-    <link rel="stylesheet" href="./notes.css">
-    <link rel="shortcut icon" href="../../assets/src/icons/page_icon.png" type="image/x-icon">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+    <link rel="stylesheet" href="../../pages/profile/profile.css">
+    <link rel="stylesheet" href="./images.css">
+    <link rel="shortcut icon" href="../../assets/src/icons/page_icon.png" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
+        integrity="sha512-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx" crossorigin="anonymous"
+        referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="./notes.css">
 </head>
 
-<body>
+<body class="is-flex is-flex-direction-column" style="min-height: 100vh; background-color: #121212;">
 
-    <div class="topbar">
-        <div>
-            <strong>Riwi</strong>
-            <a href="../images/images.html"><span class="ml-4">Images</span></a>
-            <a href="./notes.html"><span class="ml-4">Notes</span></a>
-            <a href="../logs/logs.html"><span class="ml-4">Logs</span></a>
+    <nav class="navbar is-dark">
+    <div class="container">
+        <div class="navbar-brand">
+            <a class="navbar-item has-text-white-bis is-size-2"><strong>TribeLink</strong></a>
+            <span class="navbar-burger" data-target="navbarMenuHeroA">
+                <span></span>
+                <span></span>
+                <span></span>
+            </span>
         </div>
-        <div class="dropdown is-right is-hoverable" id="user-dropdown">
-            <div class="dropdown-trigger">
-                <button class="button" aria-haspopup="true" aria-controls="dropdown-menu">
-                    <span>Sancatheboss</span>
-                    <span class="icon is-small">
-                        <i class="fas fa-angle-down" aria-hidden="true"></i>
-                    </span>
-                </button>
-            </div>
-            <div class="dropdown-menu" id="dropdown-menu" role="menu">
-                <div class="dropdown-content">
-                    <a href="../profile/profile.html" class="dropdown-item"> Profile </a>
-                    <a href="../login/login.html" class="dropdown-item"> Sign out </a>
+        <div id="navbarMenuHeroA" class="navbar-menu">
+            <div class="navbar-end">
+                <a href="../images/images.html" class="navbar-item">Images</a>
+                <a href="./notes.html" class="navbar-item is-active">Notes</a>
+                <a href="../logs/logs.html" class="navbar-item">Logs</a>
+                <div class="navbar-item has-dropdown is-hoverable">
+                    <a class="navbar-link" id="navUsername"></a>
+                    <div class="navbar-dropdown is-right">
+                        <a class="navbar-item" href="../profile/profile.html">View Profile</a>
+                        <a class="navbar-item" href="#" id="logoutBtnNav">Log Out</a>
+                    </div>
                 </div>
+                <figure class="navbar-item image">
+                    <img id="navAvatar" class="is-rounded"
+                        src="https://via.placeholder.com/24/0000FF/FFFFFF?text=U" alt="Profile Avatar">
+                </figure>
             </div>
         </div>
     </div>
+</nav>
 
-    <div class="columns m-0" style="min-height: 100vh;">
-        <aside class="column is-2 sidebar p-4">
-            <p class="menu-label has-text-centered has-text-white is-size-5 mb-3">Menu</p>
-            <ul class="menu-list">
-                <li><a href="../images/images.html">Images</a></li>
-                <li><a href="./notes.html" class="is-active">Notes</a></li>
-                <li><a href="../logs/logs.html">Logs</a></li>
-            </ul>
-        </aside>
 
-        <div class="column is-10 p-4">
-            <div class="columns is-multiline">
-                <div class="column is-one-third">
-                    <div class="box">
-                        <p class="title is-5 has-text-white">Add New Note</p>
-                        <div class="field">
-                            <div class="control">
-                                <textarea class="textarea" placeholder="Type your note here..."></textarea>
-                            </div>
-                        </div>
-                        <div class="field">
-                            <div class="control">
-                                <button class="button is-primary is-fullwidth">Save Note</button>
-                            </div>
-                        </div>
+    <main class="section is-flex is-justify-content-center">
+        <div class="notes-container" style="width: 100%; max-width: 1200px;">
+            <div class="add-note-section mb-5">
+                <h2 class="title is-4 has-text-white-bis">Create New Note</h2>
+                <div class="field">
+                    <div class="control">
+                        <textarea id="noteText" class="textarea is-primary" placeholder="Write your note here..."
+                            rows="4"></textarea>
                     </div>
                 </div>
-
-                <div class="column is-one-third">
-                    <div class="box note-card">
-                        <p class="subtitle is-6 has-text-white">Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloribus maxime inventore ipsum quae. Rem ad enim dolorum, delectus repudiandae tempore.</p>
-                        <div class="buttons">
-                            <button class="button is-danger is-small">Delete</button>
-                            <button class="button is-info is-small">Edit</button>
-                        </div>
-                    </div>
+                <div class="control">
+                    <button id="saveNoteBtn" class="button is-primary is-fullwidth">Save Note</button>
                 </div>
+            </div>
 
-                <div class="column is-one-third">
-                    <div class="box note-card">
-                        <p class="subtitle is-6 has-text-white">Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloribus maxime inventore ipsum quae. Rem ad enim dolorum, delectus repudiandae tempore.</p>
-                        <div class="buttons">
-                            <button class="button is-danger is-small">Delete</button>
-                            <button class="button is-info is-small">Edit</button>
-                        </div>
-                    </div>
+            <div class="card-container">
+                <h2 class="title is-4 has-text-white-bis mb-4">My Notes</h2>
+                <div id="notesContainer" class="columns is-multiline is-variable is-4">
+                    <p class="has-text-white has-text-centered column is-full" id="noNotesMessage">You don't have any
+                        notes yet.</p>
                 </div>
+            </div>
         </div>
-    </div>
+    </main>
+
+
     <script src="./notes.js"></script>
-    <script src="../../assets/scripts/middleware.js"></script>
 </body>
 
 </html>

@@ -1,16 +1,39 @@
 document.addEventListener('DOMContentLoaded', () => {
     const uploadTrigger = document.getElementById('uploadTrigger');
+    const fileInput = document.getElementById('fileInput'); // New: Reference to the hidden file input
     const imageGrid = document.getElementById('imageGrid');
-    const currentUser = 'Sancatheboss'; // Esto debería venir de tu sistema de autenticación
+    const navUsername = document.getElementById('navUsername');
+    const navAvatar = document.getElementById('navAvatar');
+    const logoutBtnNav = document.getElementById('logoutBtnNav');
 
-    // Función para cargar imágenes desde localStorage
+    // Retrieve active user from session storage
+    const activeUser = JSON.parse(sessionStorage.getItem('userActive'));
+    let currentUser = null;
+
+    if (activeUser && activeUser.email) {
+        currentUser = activeUser.email;
+        // Update username in the navbar
+        if (navUsername) {
+            navUsername.textContent = activeUser.name || 'User'; // Display name or 'User'
+        }
+        // Update avatar (if a path is stored in userActive)
+        if (navAvatar && activeUser.avatar) {
+            navAvatar.src = activeUser.avatar;
+        }
+    } else {
+        // If no active user, redirect to login
+        window.location.href = '../login/login.html';
+        return; // Stop execution if no user is active
+    }
+
+    // Function to load images from localStorage
     function loadImages() {
-        imageGrid.innerHTML = ''; // Limpiar la cuadrícula antes de cargar
+        imageGrid.innerHTML = ''; // Clear the grid before loading
         const storedImages = JSON.parse(localStorage.getItem('userImages')) || {};
         const userImages = storedImages[currentUser] || [];
 
         if (userImages.length === 0) {
-            imageGrid.innerHTML = '<p class="has-text-white has-text-centered column is-full">No tienes imágenes aún. ¡Sube una!</p>';
+            imageGrid.innerHTML = '<p class="has-text-white has-text-centered column is-full">You don\'t have any images yet. Upload one!</p>';
             return;
         }
 
@@ -20,7 +43,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             const card = document.createElement('div');
             card.classList.add('card');
-            card.style.position = 'relative'; // Necesario para posicionar el botón de eliminar
+            card.style.position = 'relative'; // Required to position the delete button
 
             const cardImage = document.createElement('div');
             cardImage.classList.add('card-image');
@@ -30,45 +53,70 @@ document.addEventListener('DOMContentLoaded', () => {
 
             const img = document.createElement('img');
             img.src = imageUrl;
-            img.alt = 'Uploaded Image';
-
-            const deleteButton = document.createElement('button');
-            deleteButton.classList.add('delete', 'is-small'); // Clase de Bulma para botón de eliminar
-            deleteButton.style.position = 'absolute';
-            deleteButton.style.top = '10px';
-            deleteButton.style.right = '10px';
-            deleteButton.ariaLabel = 'eliminar imagen';
-            deleteButton.addEventListener('click', () => {
-                deleteImage(imageUrl);
-            });
+            img.alt = 'User Image';
 
             figure.appendChild(img);
             cardImage.appendChild(figure);
-            card.appendChild(deleteButton);
+
+            // Delete button
+            const deleteButton = document.createElement('button');
+            deleteButton.classList.add('delete-button', 'button', 'is-danger', 'is-small');
+            deleteButton.innerHTML = '&times;'; // 'x' icon
+            deleteButton.style.position = 'absolute';
+            deleteButton.style.top = '5px';
+            deleteButton.style.right = '5px';
+            deleteButton.style.zIndex = '10'; // Ensure it's above the image
+
+            deleteButton.addEventListener('click', () => {
+                if (confirm('Are you sure you want to delete this image?')) {
+                    deleteImage(imageUrl);
+                }
+            });
+
             card.appendChild(cardImage);
+            card.appendChild(deleteButton); // Add the delete button to the card
             column.appendChild(card);
             imageGrid.appendChild(column);
         });
     }
 
-    // Función para agregar una nueva imagen
-    async function addImage() {
-        const imageUrl = prompt('Por favor, ingresa la URL de la imagen:');
-
-        if (imageUrl && imageUrl.trim() !== '') {
-            const storedImages = JSON.parse(localStorage.getItem('userImages')) || {};
-            if (!storedImages[currentUser]) {
-                storedImages[currentUser] = [];
-            }
-            storedImages[currentUser].push(imageUrl);
-            localStorage.setItem('userImages', JSON.stringify(storedImages));
-            loadImages(); // Volver a cargar las imágenes para mostrar la nueva
-        } else if (imageUrl !== null) { // Si el usuario no cancela pero deja el campo vacío
-            alert('La URL de la imagen no puede estar vacía.');
-        }
+    // Function to trigger file input click
+    function addImage() {
+        fileInput.click(); // Programmatically click the hidden file input
     }
 
-    // Función para eliminar una imagen
+    // New: Event listener for when a file is selected
+    if (fileInput) {
+        fileInput.addEventListener('change', (event) => {
+            const file = event.target.files[0]; // Get the selected file
+
+            if (file) {
+                const reader = new FileReader();
+
+                reader.onload = (e) => {
+                    const base64Image = e.target.result; // Base64 encoded image
+
+                    const storedImages = JSON.parse(localStorage.getItem('userImages')) || {};
+                    if (!storedImages[currentUser]) {
+                        storedImages[currentUser] = [];
+                    }
+                    storedImages[currentUser].push(base64Image); // Store Base64 string
+                    localStorage.setItem('userImages', JSON.stringify(storedImages));
+                    loadImages(); // Reload images to display the new one
+                };
+
+                reader.onerror = () => {
+                    alert('Error reading the image file.');
+                };
+
+                reader.readAsDataURL(file); // Read the file as a Data URL (Base64)
+            }
+            // Clear the file input value to allow selecting the same file again
+            fileInput.value = '';
+        });
+    }
+
+    // Function to delete an image
     function deleteImage(imageUrlToDelete) {
         const storedImages = JSON.parse(localStorage.getItem('userImages')) || {};
         let userImages = storedImages[currentUser] || [];
@@ -76,22 +124,31 @@ document.addEventListener('DOMContentLoaded', () => {
         const initialLength = userImages.length;
         userImages = userImages.filter(url => url !== imageUrlToDelete);
 
-        if (userImages.length < initialLength) { // Solo si una imagen fue eliminada
+        if (userImages.length < initialLength) { // Only if an image was deleted
             storedImages[currentUser] = userImages;
             localStorage.setItem('userImages', JSON.stringify(storedImages));
-            loadImages(); // Volver a cargar las imágenes para actualizar la vista
+            loadImages(); // Reload images to update the view
         } else {
-            alert('No se pudo encontrar la imagen para eliminar.');
+            alert('Could not find the image to delete.');
         }
     }
 
-    // Event listener para el trigger de subida
+    // Event listener for the upload trigger
     if (uploadTrigger) {
         uploadTrigger.addEventListener('click', addImage);
     } else {
-        console.error('El elemento #uploadTrigger no fue encontrado.');
+        console.error('The #uploadTrigger element was not found.');
     }
-            // sadalsjksdhasldhasdsljkdha asdjsajñsdjkfnañsdfnsadf
-    // Cargar las imágenes al iniciar la página
+
+    // Event listener for the logout button in the navbar
+    if (logoutBtnNav) {
+        logoutBtnNav.addEventListener('click', (e) => {
+            e.preventDefault();
+            sessionStorage.removeItem('userActive'); // Clear active user session
+            window.location.href = '../login/login.html'; // Redirect to login page
+        });
+    }
+
+    // Load images on page initialization
     loadImages();
 });

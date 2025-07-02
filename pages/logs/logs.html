@@ -1,72 +1,65 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <title>Logs - TribeLink</title>
-    <link rel="stylesheet" href="../../pages/images/images.css">
-    <link rel="shortcut icon" href="../../assets/src/icons/page_icon.png" type="image/x-icon">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+    <link rel="stylesheet" href="../../pages/profile/profile.css">
+    <link rel="stylesheet" href="./logs.css">
+    <link rel="shortcut icon" href="../../assets/src/icons/page_icon.png" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"/>
 </head>
+<body class="is-flex is-flex-direction-column" style="min-height: 100vh; background-color: #121212;">
 
-<body>
-
-    <div class="topbar">
-        <div>
-            <strong>Riwi</strong>
-            <a href="../images/images.html"><span class="ml-4">Images</span></a>
-            <a href="../notes/notes.html"><span class="ml-4">Notes</span></a>
-            <a href="./logs.html"><span class="ml-4">Logs</span></a>
-        </div>
-        <div class="dropdown is-right is-hoverable" id="user-dropdown">
-            <div class="dropdown-trigger">
-                <button class="button" aria-haspopup="true" aria-controls="dropdown-menu">
-                    <span>Sancatheboss</span>
-                    <span class="icon is-small">
-                        <i class="fas fa-angle-down" aria-hidden="true"></i>
+    <div class="topbar hero-head">
+        <nav class="navbar is-dark">
+            <div class="container">
+                <div class="navbar-brand">
+                    <a class="navbar-item has-text-white-bis is-size-2"><strong>TribeLink</strong></a>
+                    <span class="navbar-burger" data-target="navbarMenuHeroA">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                        <span></span>
                     </span>
-                </button>
-            </div>
-            <div class="dropdown-menu" id="dropdown-menu" role="menu">
-                <div class="dropdown-content">
-                    <a href="../profile/profile.html" class="dropdown-item"> Profile </a>
-                    <a href="../login/login.html" class="dropdown-item"> Sign out </a>
+                </div>
+                <div id="navbarMenuHeroA" class="navbar-menu">
+                    <div class="navbar-end">
+                        <a href="./images.html" class="navbar-item">Images</a>
+                        <a href="../notes/notes.html" class="navbar-item">Notes</a>
+                        <a href="../logs/logs.html" class="navbar-item is-active">Logs</a>
+
+                        <div class="navbar-item has-dropdown is-hoverable">
+                            <a class="navbar-link" id="navUsername">
+                                <!-- Username will be inserted here -->
+                            </a>
+                            <div class="navbar-dropdown is-right">
+                                <a class="navbar-item" href="../profile/profile.html">
+                                    View Profile
+                                </a>
+                                <a class="navbar-item" href="#" id="logoutBtnNav"> <!-- Updated ID -->
+                                    Log Out
+                                </a>
+                            </div>
+                        </div>
+                        <figure class="navbar-item image">
+                            <img id="navAvatar" class="is-rounded"
+                                src="https://via.placeholder.com/24/0000FF/FFFFFF?text=U" alt="Profile Avatar">
+                        </figure>
+                    </div>
                 </div>
             </div>
-        </div>
+        </nav>
     </div>
 
-    <div class="columns m-0" style="min-height: 100vh;">
-        <aside class="column is-2 sidebar p-4">
-            <p class="menu-label has-text-centered has-text-white is-size-5 mb-3">Menu</p>
-            <ul class="menu-list">
-                <li><a href="./images.html">Images</a></li>
-                <li><a href="../notes/notes.html">Notes</a></li>
-                <li><a href="../logs/logs.html" class="is-active">Logs</a></li>
-            </ul>
-        </aside>
-
-        <div class="column is-10 p-4">
-            <div class="logs-container">
-                <h1 class="title is-4 has-text-black">Activity Logs</h1>
-                <div id="logsContainer" class="content">
-                    <p>Recent activity logs will appear here. (e.g., Login, Note Creation, Image Upload) [cite: 131, 134, 135]</p>
-                    <p>
-                        * Log 1: Login - 2025-06-26 16:32 [cite: 134, 139]
-                    </p>
-                    <p>
-                        * Log 2: Created Note "Meeting Agenda" - 2025-06-27 10:00 [cite: 135, 139]
-                    </p>
-                    <p>
-                        * Log 3: Uploaded Image "Vacation.jpg" - 2025-06-28 14:15 [cite: 135, 139]
-                    </p>
-                </div>
-            </div>
+    <main class="section is-flex is-justify-content-center">
+        <div class="logs-container" style="width: 100%; max-width: 1200px;">
+            <h1 class="title is-4 has-text-white">Activity Logs</h1>
+            <div id="logsContainer" class="content"></div>
         </div>
+    </main>
 
     <script src="./logs.js"></script>
-    <script src="../../assets/scripts/middleware.js"></script>
 </body>
-
-
 </html>
