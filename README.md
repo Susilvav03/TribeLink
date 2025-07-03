@@ -55,9 +55,9 @@ Javascript, HTML, CSS...
 
 ## Logic 
 
-```
 
-```
+`localStorage` is used to keep track of the number of visits by saving the key "visitas" and incrementing it each time the site is loaded, allowing a persistent visit counter across browser sessions. `sessionStorage` is utilized to store a session-based visit counter under the key "visitasSesion", which resets when the browser tab is closed. The project defines `JavaScript functions` for counting visits, updating HTML elements with these counts, and adding messages to the on-page log.` Logging` works by dynamically inserting new `<div>` elements into the element with ID logs, displaying time-stamped messages that document user actions and system events directly in the page interface.
+
 
 ## Authors
 
