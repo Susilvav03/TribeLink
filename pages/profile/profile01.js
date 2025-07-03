@@ -5,7 +5,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const activitySummary = document.getElementById('activitySummary');
 
     const showProfileBtn = document.getElementById('showProfileBtn');
-    const showActivityBtn = document.getElementById('showActivityBtn');
     const editProfileBtn = document.getElementById('editProfileBtn');
     const editProfileDisplayBtn = document.getElementById('editProfileDisplayBtn'); // "Edit Profile" button on the display view
 
@@ -217,15 +216,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Update sidebar button active state
         showProfileBtn.classList.remove('is-active');
-        showActivityBtn.classList.remove('is-active');
         editProfileBtn.classList.remove('is-active');
 
         if (sectionToShow === 'profile') {
             showProfileBtn.classList.add('is-active');
         } else if (sectionToShow === 'edit') {
             editProfileBtn.classList.add('is-active');
-        } else if (sectionToShow === 'activity') {
-            showActivityBtn.classList.add('is-active');
         }
     };
 
@@ -245,11 +241,6 @@ document.addEventListener('DOMContentLoaded', () => {
     editProfileDisplayBtn.addEventListener('click', (e) => { // "Edit Profile" button on the display view
         e.preventDefault();
         showSection('edit');
-    });
-
-    showActivityBtn.addEventListener('click', (e) => {
-        e.preventDefault();
-        showSection('activity');
     });
 
     // Avatar upload handling

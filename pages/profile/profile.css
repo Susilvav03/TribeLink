@@ -78,7 +78,7 @@ html, body {
 }
 
 .card-container .has-text-grey-light {
-    color: #B0BEC5 !important; /* Muted grey for subtle text */
+    color: #b4b4b4 !important; /* Muted grey for subtle text */
 }
 
 /* Input field styling */
