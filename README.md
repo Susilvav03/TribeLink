@@ -1,12 +1,12 @@
 ![Static Badge](https://img.shields.io/badge/Status-🚧_In_Progress-orange)
 
-# TribeLink
+# TribeLink - Cell Enigma 
 
 TribeLink is a social network where you can upload or delete images and notes, keep track of the actions 
 that you made with the logs tab and update tour personal information on your profile
 
 
-## 🛠 Skills
+## 🛠 Tech
 Javascript, HTML, CSS...
 
 
@@ -33,6 +33,24 @@ Javascript, HTML, CSS...
 
 ## Features
 
+1. Images
+   - Upload Images
+   - Delete Images
+2. Notes
+   - Create notes
+   - Edit notes
+   - Delete notes
+3. Profile
+   - Register
+   - login
+   - log out
+   - edit profile
+4. Logs
+   - Login
+   - Log out
+   - profile updated
+   - Every log with User, action and date time info
+5. Data persistence
 
 
 ## Logic 
@@ -70,7 +88,8 @@ Javascript, HTML, CSS...
 We put into practice key JavaScript concepts such as manipulation of the DOM, the use of conditionals, and various control
 structures to manage game logic and user interaction. Additionally, this project allowed us to reinforce and deepen our
 understanding of the concepts introduced in the previous module, including the structure and styling of web pages using HTML
-and CSS. This integration of front-end technologies was essential to develop an interactive and visually coherent user experience.
+and CSS, and now implementing the framework Bulma. This integration of front-end technologies was essential to develop an
+interactive and visually coherent user experience.
 
 ```
 
