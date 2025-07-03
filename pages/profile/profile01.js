@@ -17,7 +17,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const lastnameInput = document.getElementById('lastname');
     const emailInput = document.getElementById('profileEmail');
     const phoneInput = document.getElementById('phone');
-    const addressInput = document.getElementById('address');
     const cityInput = document.getElementById('city');
     const countryInput = document.getElementById('country');
 
@@ -25,7 +24,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const displayLastName = document.getElementById('displayLastName');
     const displayEmail = document.getElementById('displayEmail');
     const displayPhone = document.getElementById('displayPhone');
-    const displayAddress = document.getElementById('displayAddress');
     const displayCity = document.getElementById('displayCity');
     const displayCountry = document.getElementById('displayCountry');
 
@@ -144,7 +142,6 @@ document.addEventListener('DOMContentLoaded', () => {
             displayLastName.textContent = userProfile.lastName || 'N/A';
             displayEmail.textContent = userProfile.email || 'N/A';
             displayPhone.textContent = userProfile.phone || 'N/A';
-            displayAddress.textContent = userProfile.address || 'N/A';
             displayCity.textContent = userProfile.city || 'N/A';
             displayCountry.textContent = userProfile.country || 'N/A';
             // displayZip.textContent = userProfile.zip || 'N/A'; // Removed
@@ -169,7 +166,6 @@ document.addEventListener('DOMContentLoaded', () => {
             lastnameInput.value = userProfile.lastName || '';
             emailInput.value = userProfile.email || ''; // Email is readonly
             phoneInput.value = userProfile.phone || '';
-            addressInput.value = userProfile.address || '';
             cityInput.value = userProfile.city || '';
             countryInput.value = userProfile.country || '';
             // zipInput.value = userProfile.zip || ''; // Removed
@@ -269,9 +265,6 @@ document.addEventListener('DOMContentLoaded', () => {
         isValid = validateLength(lastnameInput, 'Last name', 2, 50) && isValid;
         // Email is readonly, no format validation needed here, only presence if edited
         isValid = validatePhone(phoneInput) && isValid;
-        if (addressInput.value.trim() !== '') {
-            isValid = validateLength(addressInput, 'Address', 5, 100) && isValid;
-        }
         if (cityInput.value.trim() !== '') {
             isValid = validateLength(cityInput, 'City', 2, 50) && isValid;
         }
@@ -291,7 +284,6 @@ document.addEventListener('DOMContentLoaded', () => {
             userProfile.name = nameInput.value.trim();
             userProfile.lastName = lastnameInput.value.trim();
             userProfile.phone = phoneInput.value.trim();
-            userProfile.address = addressInput.value.trim();
             userProfile.city = cityInput.value.trim();
             userProfile.country = countryInput.value.trim();
             // userProfile.zip = zipInput.value.trim(); // Removed
