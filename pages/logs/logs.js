@@ -105,5 +105,5 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Initialize page
     renderLogs();
-    addLog('User logged in'); // English log message
+    addLog('User logged in'); 
 });

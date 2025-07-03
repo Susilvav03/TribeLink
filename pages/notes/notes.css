@@ -67,16 +67,16 @@ body {
 .main-content {
     display: flex;
     justify-content: center;
-    /* Center content horizontally /
-align-items: flex-start; / Align items to the start vertically */
+    /* Center content horizontally */
+    align-items: flex-start; /* Align items to the start vertically */
     flex-grow: 1;
     padding: 2rem;
 }
 
 .notes-container {
     width: 80%;
-    /* Adjust width as needed /
-max-width: 960px; / Maximum width for the content */
+    /* Adjust width as needed */
+    max-width: 960px; /* Maximum width for the content */
 }
 
 .add-note-section,
@@ -98,10 +98,10 @@ max-width: 960px; / Maximum width for the content */
     width: 100%;
     padding: 0.75rem;
     margin-bottom: 1rem;
-    border: 1px solid #374151;
+    border: 1px solid #00d1b2; /* Changed border color */
     border-radius: 4px;
-    background-color: #2D3748;
-    color: #E0E0E0;
+    background-color: #363636; /* Changed background color to be lighter */
+    color: #FFFFFF; /* Changed text color to white for contrast */
     box-sizing: border-box;
     resize: vertical;
 }
@@ -167,3 +167,4 @@ max-width: 960px; / Maximum width for the content */
         width: 95%;
     }
 }
+

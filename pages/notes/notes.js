@@ -8,6 +8,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const notesContainer = document.getElementById('notesContainer');
     const noNotesMessage = document.getElementById('noNotesMessage');
 
+    let editingIndex = -1; // To store the index of the note being edited
+
     // Get active user from session
     const activeUser = JSON.parse(sessionStorage.getItem('userActive'));
     
@@ -24,7 +26,7 @@ document.addEventListener('DOMContentLoaded', () => {
     loadNotes();
 
     // Event listeners
-    saveNoteBtn.addEventListener('click', saveNote);
+    saveNoteBtn.addEventListener('click', handleSaveOrUpdateNote);
     if (logoutBtnNav) {
         logoutBtnNav.addEventListener('click', handleLogout);
     }
@@ -71,18 +73,19 @@ document.addEventListener('DOMContentLoaded', () => {
             <div class="card-content">
                 <div class="content">
                     <p class="has-text-white">${note.text}</p>
-                    <small class="has-text-grey-light">${formatDate(note.date)}</small>
+                    <small class="has-text-grey-dark">${formatDate(note.date)}</small>
                 </div>
             </div>
             <footer class="card-footer">
-                <button class="button is-danger is-small card-footer-item delete-btn" data-index="${index}">
-                    Delete
-                </button>
+                <a href="#" class="card-footer-item button is-link is-small edit-btn" data-index="${index}">Edit</a>
+                <a href="#" class="card-footer-item button is-danger is-small delete-btn" data-index="${index}">Delete</a>
             </footer>
         `;
         
         // Add event listener to delete button
         card.querySelector('.delete-btn').addEventListener('click', () => deleteNote(index));
+        // Add event listener to edit button
+        card.querySelector('.edit-btn').addEventListener('click', () => editNote(index));
         
         column.appendChild(card);
         return column;
@@ -100,8 +103,17 @@ document.addEventListener('DOMContentLoaded', () => {
         return new Date(dateString).toLocaleDateString('en-US', options);
     }
 
+    // Function to handle saving or updating a note
+    function handleSaveOrUpdateNote() {
+        if (editingIndex === -1) {
+            saveNewNote();
+        } else {
+            updateExistingNote();
+        }
+    }
+
     // Function to save a new note
-    function saveNote() {
+    function saveNewNote() {
         const text = noteTextArea.value.trim();
         if (!text) return;
 
@@ -115,6 +127,35 @@ document.addEventListener('DOMContentLoaded', () => {
         
         localStorage.setItem(userNotesKey, JSON.stringify(notes));
         noteTextArea.value = '';
+        loadNotes();
+    }
+
+    // Function to edit an existing note
+    function editNote(index) {
+        const userNotesKey = `notes_${activeUser.email}`;
+        const notes = JSON.parse(localStorage.getItem(userNotesKey)) || [];
+        const noteToEdit = notes[index];
+
+        noteTextArea.value = noteToEdit.text;
+        saveNoteBtn.textContent = 'Update Note';
+        editingIndex = index;
+    }
+
+    // Function to update an existing note
+    function updateExistingNote() {
+        const text = noteTextArea.value.trim();
+        if (!text) return;
+
+        const userNotesKey = `notes_${activeUser.email}`;
+        const notes = JSON.parse(localStorage.getItem(userNotesKey)) || [];
+        
+        notes[editingIndex].text = text;
+        notes[editingIndex].date = new Date().toISOString(); // Update timestamp
+        
+        localStorage.setItem(userNotesKey, JSON.stringify(notes));
+        noteTextArea.value = '';
+        saveNoteBtn.textContent = 'Save Note';
+        editingIndex = -1; // Reset editing index
         loadNotes();
     }
 

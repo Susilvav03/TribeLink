@@ -20,12 +20,13 @@ body {
 }
 
 .table thead th {
-    background-color: #2e7d8b;
+    background-color: #00d1b2;
     color: white;
 }
 
 .table td, .table th {
-    color: #0b4edf;
+    color: #00d1b2;
     border-color: #374151;
     background-color: transparent;
 }
+
