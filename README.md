@@ -7,7 +7,7 @@ that you made with the logs tab and update tour personal information on your pro
 
 
 ## 🛠 Tech
-Javascript, HTML, CSS...
+Javascript, HTML, CSS, Bulma...
 
 
 ## How to use
@@ -86,7 +86,7 @@ Javascript, HTML, CSS...
 
 ```
 We put into practice key JavaScript concepts such as manipulation of the DOM, the use of conditionals, and various control
-structures to manage game logic and user interaction. Additionally, this project allowed us to reinforce and deepen our
+structures to manage the user's data and user interaction. Additionally, this project allowed us to reinforce and deepen our
 understanding of the concepts introduced in the previous module, including the structure and styling of web pages using HTML
 and CSS, and now implementing the framework Bulma. This integration of front-end technologies was essential to develop an
 interactive and visually coherent user experience.
